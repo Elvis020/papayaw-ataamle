@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -13,28 +13,28 @@ export default function Navigation() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
     // Prevent scrolling when mobile menu is open
     if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
   }, [mobileMenuOpen]);
 
   const isActive = (path: string) => pathname === path;
 
   const navLinks = [
-    { href: '/about', label: 'About' },
-    { href: '/videos', label: 'Videos' },
-    { href: '/gallery', label: 'Gallery' },
-    { href: '/brands', label: 'Brands' },
-    { href: '/shows', label: 'Shows' },
-    { href: '/contact', label: 'Contact', isAccent: true },
+    { href: "/shows", label: "Shows" },
+    { href: "/videos", label: "Videos" },
+    { href: "/gallery", label: "Gallery" },
+    { href: "/brands", label: "Brands" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact", isAccent: true },
   ];
 
   return (
@@ -42,8 +42,8 @@ export default function Navigation() {
       <nav
         className={`fixed top-0 w-full z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-md border-b border-gray-200 py-4'
-            : 'bg-white/95 backdrop-blur-md py-6'
+            ? "bg-white/95 backdrop-blur-md border-b border-gray-200 py-4"
+            : "bg-white/95 backdrop-blur-md py-6"
         }`}
       >
         <div className="max-w-7xl mx-auto px-8 flex justify-between items-center">
@@ -63,18 +63,18 @@ export default function Navigation() {
                 className={`transition-colors relative group ${
                   link.isAccent
                     ? isActive(link.href)
-                      ? 'text-[var(--color-accent)] font-medium'
-                      : 'text-[var(--color-accent)] hover:text-[#a33d1e] font-medium'
+                      ? "text-[var(--color-accent)] font-medium"
+                      : "text-[var(--color-accent)] hover:text-[#a33d1e] font-medium"
                     : isActive(link.href)
-                    ? 'text-[var(--color-charcoal)]'
-                    : 'text-[var(--color-gray)] hover:text-[var(--color-charcoal)]'
+                      ? "text-[var(--color-charcoal)]"
+                      : "text-[var(--color-gray)] hover:text-[var(--color-charcoal)]"
                 }`}
               >
                 {link.label}
                 {!link.isAccent && (
                   <span
                     className={`absolute -bottom-1 left-0 h-0.5 bg-[var(--color-accent)] transition-all duration-300 ${
-                      isActive(link.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                      isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
                     }`}
                   ></span>
                 )}
@@ -91,17 +91,17 @@ export default function Navigation() {
             <div className="w-6 h-5 relative flex flex-col justify-between">
               <span
                 className={`w-full h-0.5 bg-[var(--color-charcoal)] transition-all duration-300 ${
-                  mobileMenuOpen ? 'rotate-45 translate-y-2' : ''
+                  mobileMenuOpen ? "rotate-45 translate-y-2" : ""
                 }`}
               />
               <span
                 className={`w-full h-0.5 bg-[var(--color-charcoal)] transition-all duration-300 ${
-                  mobileMenuOpen ? 'opacity-0' : ''
+                  mobileMenuOpen ? "opacity-0" : ""
                 }`}
               />
               <span
                 className={`w-full h-0.5 bg-[var(--color-charcoal)] transition-all duration-300 ${
-                  mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
+                  mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
                 }`}
               />
             </div>
@@ -112,13 +112,13 @@ export default function Navigation() {
       {/* Mobile Menu */}
       <div
         className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${
-          mobileMenuOpen ? 'visible' : 'invisible'
+          mobileMenuOpen ? "visible" : "invisible"
         }`}
       >
         {/* Backdrop */}
         <div
           className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-500 ${
-            mobileMenuOpen ? 'opacity-100' : 'opacity-0'
+            mobileMenuOpen ? "opacity-100" : "opacity-0"
           }`}
           onClick={() => setMobileMenuOpen(false)}
         />
@@ -126,7 +126,7 @@ export default function Navigation() {
         {/* Menu Panel */}
         <div
           className={`absolute right-0 top-0 bottom-0 w-[300px] bg-white shadow-2xl transition-transform duration-500 ${
-            mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            mobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           <div className="flex flex-col h-full pt-24 px-8">
@@ -138,15 +138,15 @@ export default function Navigation() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`text-lg py-4 border-b border-gray-100 transition-colors ${
                     link.isAccent
-                      ? 'text-[var(--color-accent)] font-medium'
+                      ? "text-[var(--color-accent)] font-medium"
                       : isActive(link.href)
-                      ? 'text-[var(--color-charcoal)] font-semibold'
-                      : 'text-[var(--color-gray)]'
+                        ? "text-[var(--color-charcoal)] font-semibold"
+                        : "text-[var(--color-gray)]"
                   }`}
                   style={{
                     animation: mobileMenuOpen
                       ? `slideInRight 0.5s ease-out ${index * 0.1}s backwards`
-                      : 'none',
+                      : "none",
                   }}
                 >
                   {link.label}
@@ -157,7 +157,9 @@ export default function Navigation() {
             <div
               className="mt-auto pb-8 text-center text-sm text-[var(--color-gray)]"
               style={{
-                animation: mobileMenuOpen ? 'fadeIn 0.5s ease-out 0.6s backwards' : 'none',
+                animation: mobileMenuOpen
+                  ? "fadeIn 0.5s ease-out 0.6s backwards"
+                  : "none",
               }}
             >
               <p>© {new Date().getFullYear()} Papa Yaw Ataamle</p>
