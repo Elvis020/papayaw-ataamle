@@ -9,34 +9,28 @@ import Link from 'next/link';
 export default function Brands() {
   const partnerships = [
     {
-      brand: 'Nike',
+      brand: 'Brand Partner 1',
       role: 'Brand Ambassador',
       description: 'Creating comedy content around sports culture and athlete lifestyle',
+      image: '/images/brands/image00001.jpeg',
     },
     {
-      brand: 'Netflix',
+      brand: 'Brand Partner 2',
       role: 'Content Partner',
       description: 'Developing original comedy specials and behind-the-scenes content',
+      image: '/images/brands/image00002.jpeg',
     },
     {
-      brand: 'Apple',
+      brand: 'Brand Partner 3',
       role: 'Creative Collaborator',
       description: 'Producing podcast series and exclusive digital content',
+      image: '/images/brands/image00003.jpeg',
     },
     {
-      brand: 'Coca-Cola',
+      brand: 'Brand Partner 4',
       role: 'Campaign Ambassador',
       description: 'Multi-platform advertising and social media activations',
-    },
-    {
-      brand: 'Samsung',
-      role: 'Tech Partner',
-      description: 'Product integration and innovative content creation',
-    },
-    {
-      brand: 'Airbnb',
-      role: 'Travel Ambassador',
-      description: 'Showcasing unique stays and travel experiences with humor',
+      image: '/images/brands/image00004.jpeg',
     },
   ];
 
@@ -44,10 +38,10 @@ export default function Brands() {
     <div className="bg-white min-h-screen font-[family-name:var(--font-dm-sans)]">
       <Navigation />
 
-      <section className="pt-32 pb-24 px-8">
+      <section className="pt-32 pb-24 px-5 md:px-8">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
-            <h1 className="text-6xl md:text-7xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-8">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-8">
               Brand Partnerships
             </h1>
             <div className="w-16 h-0.5 bg-[var(--color-accent)] mb-8" />
@@ -65,10 +59,12 @@ export default function Brands() {
             {partnerships.map((partnership, index) => (
               <ScrollReveal key={index} delay={index * 0.1}>
                 <div className="group">
-                  <div className="aspect-video bg-[var(--color-light-gray)] rounded-sm mb-6 flex items-center justify-center hover:bg-[var(--color-charcoal)] transition-colors duration-300">
-                    <span className="text-[var(--color-charcoal)] group-hover:text-white text-2xl font-[family-name:var(--font-fraunces)] font-bold transition-colors">
-                      {partnership.brand}
-                    </span>
+                  <div className="aspect-video bg-[var(--color-light-gray)] rounded-sm mb-6 overflow-hidden">
+                    <img
+                      src={partnership.image}
+                      alt={partnership.brand}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
                   <h3 className="text-[var(--color-accent)] text-sm uppercase tracking-wider mb-2">
                     {partnership.role}

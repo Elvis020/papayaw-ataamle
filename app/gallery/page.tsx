@@ -16,28 +16,34 @@ export default function Gallery() {
 
   // All photos - simple flat list
   const photos = [
-    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1468234847176-28606331216a?w=400&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=400&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=400&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?w=400&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=400&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=400&h=400&fit=crop",
+    "/images/image001.jpeg",
+    "/images/image035.jpeg",
+    "/images/image051.jpeg",
+    "/images/image00005.jpeg",
   ];
 
   // Desktop photos with captions
   const allPhotos = [
-    { image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=600&fit=crop", caption: "Madison Square Garden", location: "New York, NY" },
-    { image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&h=600&fit=crop", caption: "Sold Out Show", location: "Los Angeles, CA" },
-    { image: "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=600&h=600&fit=crop", caption: "Comedy Festival", location: "Montreal, QC" },
-    { image: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=600&h=600&fit=crop", caption: "Backstage Moments", location: "Chicago, IL" },
-    { image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=600&fit=crop", caption: "Fan Meet & Greet", location: "Austin, TX" },
-    { image: "https://images.unsplash.com/photo-1468234847176-28606331216a?w=600&h=600&fit=crop", caption: "Tour Life", location: "Miami, FL" },
-    { image: "https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?w=600&h=600&fit=crop", caption: "Studio Recording", location: "New York, NY" },
-    { image: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&h=600&fit=crop", caption: "Opening Night", location: "Las Vegas, NV" },
-    { image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=600&h=600&fit=crop", caption: "Special Guest", location: "San Francisco, CA" },
+    {
+      image: "/images/image001.jpeg",
+      caption: "On Stage",
+      location: "Accra, Ghana",
+    },
+    {
+      image: "/images/image035.jpeg",
+      caption: "Comedy Night",
+      location: "Accra, Ghana",
+    },
+    {
+      image: "/images/image051.jpeg",
+      caption: "Backstage Moments",
+      location: "Accra, Ghana",
+    },
+    {
+      image: "/images/image00005.jpeg",
+      caption: "Fan Meet & Greet",
+      location: "Accra, Ghana",
+    },
   ];
 
   return (
@@ -48,13 +54,12 @@ export default function Gallery() {
         /* ===== MOBILE LAYOUT ===== */
         <main className="pb-8">
           {/* Header */}
-          <section className="pt-20 pb-6 px-5 bg-[var(--color-charcoal)]">
-            <p className="text-xs uppercase tracking-widest text-[var(--color-accent)] mb-2 animate-fade-in">
-              Behind The Scenes
-            </p>
-            <h1 className="text-3xl font-[family-name:var(--font-fraunces)] font-bold text-white animate-slide-up">
+          <section className="pt-24 pb-6 px-5">
+            <h1 className="text-4xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-4">
               Gallery
             </h1>
+            <div className="w-12 h-0.5 bg-[var(--color-accent)] mb-4" />
+            <p className="text-sm text-[var(--color-gray)]">Photos & Moments</p>
           </section>
 
           {/* Simple Photo Grid */}
@@ -72,31 +77,16 @@ export default function Gallery() {
               ))}
             </div>
           </section>
-
-          {/* Instagram CTA */}
-          <section className="px-5 py-6">
-            <a
-              href="https://instagram.com/papayaw"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 w-full py-4 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white rounded-xl"
-            >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.25a1.25 1.25 0 0 0-2.5 0 1.25 1.25 0 0 0 2.5 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" />
-              </svg>
-              <span className="font-medium">Follow on Instagram</span>
-            </a>
-          </section>
         </main>
       ) : (
         /* ===== DESKTOP LAYOUT ===== */
         <>
-          <section className="pt-32 pb-16 px-8">
+          <section className="pt-32 pb-16 px-5 md:px-8">
             <div className="max-w-7xl mx-auto">
               <p className="text-sm uppercase tracking-widest text-[var(--color-accent)] mb-4">
-                Behind The Scenes
+                Photos & Moments
               </p>
-              <h1 className="text-6xl md:text-7xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-6">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-6">
                 Gallery
               </h1>
               <div className="w-16 h-0.5 bg-[var(--color-accent)] mb-6" />
@@ -137,10 +127,16 @@ export default function Gallery() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white rounded-lg hover:opacity-90 transition-opacity"
                 >
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-6 h-6"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.25a1.25 1.25 0 0 0-2.5 0 1.25 1.25 0 0 0 2.5 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" />
                   </svg>
-                  <span className="font-medium uppercase tracking-wider">Follow on Instagram</span>
+                  <span className="font-medium uppercase tracking-wider">
+                    Follow on Instagram
+                  </span>
                 </a>
               </div>
             </div>
@@ -160,13 +156,23 @@ export default function Gallery() {
         }
 
         @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
 
         @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         .animate-fade-in {

@@ -35,13 +35,11 @@ export default function Home() {
     };
   }, [isMobile]);
 
-  // Shorts data - vertical video format
+  // Shorts data - vertical video format (local videos)
   const shorts = [
-    { title: "Dating in Ghana", views: "2.1M", image: "https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?w=300&h=533&fit=crop" },
-    { title: "Airport Security", views: "1.8M", image: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=300&h=533&fit=crop" },
-    { title: "Family Dinners", views: "1.2M", image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=300&h=533&fit=crop" },
-    { title: "Uber Drivers", views: "3.5M", image: "https://images.unsplash.com/photo-1468234847176-28606331216a?w=300&h=533&fit=crop" },
-    { title: "Wedding Speech", views: "2.8M", image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=300&h=533&fit=crop" },
+    { title: "Dating in Ghana", views: "2.1M", video: "/videos/video1.mp4" },
+    { title: "Airport Security", views: "1.8M", video: "/videos/video2.mp4" },
+    { title: "Uber Drivers", views: "3.5M", video: "/videos/video4.mov" },
   ];
 
   return (
@@ -51,14 +49,14 @@ export default function Home() {
 
         {/* ===== MOBILE LAYOUT ===== */}
         {isMobile ? (
-          <main className="pb-20"> {/* Bottom padding for fixed nav */}
+          <main className="pb-8">
 
             {/* Hero - Compact Mobile with Dark Overlay */}
             <section className="relative bg-[var(--color-charcoal)]">
               {/* Hero Image with Dark Overlay */}
               <div className="relative h-[65vh] overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=600&h=800&fit=crop&crop=faces&q=80"
+                  src="/images/profile/image00012.jpeg"
                   alt="Papa Yaw Ataamle"
                   className="w-full h-full object-cover animate-fade-in"
                 />
@@ -122,22 +120,15 @@ export default function Home() {
                     className="flex-shrink-0 snap-start"
                   >
                     <div className="relative w-28 aspect-[9/16] rounded-sm overflow-hidden bg-[var(--color-charcoal)]">
-                      <img
-                        src={short.image}
-                        alt={short.title}
+                      <video
+                        src={short.video}
                         className="w-full h-full object-cover"
-                        loading="lazy"
+                        muted
+                        loop
+                        playsInline
+                        autoPlay
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-
-                      {/* Play Icon */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                          <svg className="w-4 h-4 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </div>
-                      </div>
 
                       {/* Info */}
                       <div className="absolute bottom-2 left-2 right-2">
@@ -194,11 +185,10 @@ export default function Home() {
 
               <div className="flex gap-3 overflow-x-auto pl-5 pr-5 pb-2 snap-x snap-mandatory scroll-pl-5 scrollbar-hide">
                 {[
-                  "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=200&h=200&fit=crop",
-                  "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200&h=200&fit=crop",
-                  "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=200&h=200&fit=crop",
-                  "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=200&h=200&fit=crop",
-                  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop",
+                  "/images/image001.jpeg",
+                  "/images/image035.jpeg",
+                  "/images/image051.jpeg",
+                  "/images/image00005.jpeg",
                 ].map((img, i) => (
                   <Link key={i} href="/gallery" className="flex-shrink-0 snap-start">
                     <div className="w-24 h-24 rounded-sm overflow-hidden">
@@ -264,30 +254,6 @@ export default function Home() {
               </p>
             </footer>
 
-            {/* Fixed Bottom Navigation - Mobile Only */}
-            <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
-              <div className="flex justify-around py-2">
-                <Link href="/shows" className="flex flex-col items-center py-2 px-4">
-                  <svg className="w-5 h-5 text-[var(--color-charcoal)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span className="text-[10px] mt-1 text-[var(--color-charcoal)]">Shows</span>
-                </Link>
-                <Link href="/videos" className="flex flex-col items-center py-2 px-4">
-                  <svg className="w-5 h-5 text-[var(--color-accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span className="text-[10px] mt-1 text-[var(--color-accent)] font-medium">Videos</span>
-                </Link>
-                <Link href="/contact" className="flex flex-col items-center py-2 px-4">
-                  <svg className="w-5 h-5 text-[var(--color-charcoal)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  <span className="text-[10px] mt-1 text-[var(--color-charcoal)]">Contact</span>
-                </Link>
-              </div>
-            </nav>
           </main>
         ) : (
           /* ===== DESKTOP LAYOUT ===== */
@@ -366,7 +332,7 @@ export default function Home() {
                   <div className="absolute inset-0 flex items-center justify-center p-12">
                     <div className="relative group w-full max-w-md">
                       <div className="relative aspect-[3/4] overflow-hidden shadow-2xl">
-                        <img src="https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=800&h=1000&fit=crop&crop=faces&q=80" alt="Papa Yaw Ataamle" className="w-full h-full object-cover" />
+                        <img src="/images/profile/image00012.jpeg" alt="Papa Yaw Ataamle" className="w-full h-full object-cover" />
                       </div>
                       <div className="absolute -top-4 -right-4 w-full h-full border-2 border-[var(--color-accent)] -z-10" />
                       <div className="absolute -bottom-6 -left-6 bg-white text-[var(--color-charcoal)] p-6 shadow-2xl z-20">
@@ -405,19 +371,19 @@ export default function Home() {
                   </div>
 
                   {/* Shorts Grid - Vertical Format */}
-                  <div className="grid grid-cols-5 gap-6">
+                  <div className="grid grid-cols-3 gap-6">
                     {shorts.map((short, i) => (
                       <Link key={i} href="/videos" className="group">
                         <div className="relative aspect-[9/16] rounded-sm overflow-hidden bg-[var(--color-charcoal)] shadow-lg group-hover:shadow-2xl transition-shadow">
-                          <img src={short.image} alt={short.title} className="w-full h-full object-cover group-hover:scale-[1.075] transition-transform duration-500" />
+                          <video
+                            src={short.video}
+                            className="w-full h-full object-cover group-hover:scale-[1.075] transition-transform duration-500"
+                            muted
+                            loop
+                            playsInline
+                            autoPlay
+                          />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                              <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z" />
-                              </svg>
-                            </div>
-                          </div>
                           <div className="absolute bottom-4 left-4 right-4">
                             <p className="text-white font-medium mb-1">{short.title}</p>
                             <p className="text-white/70 text-sm">{short.views} views</p>

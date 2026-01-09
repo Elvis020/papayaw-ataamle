@@ -28,10 +28,10 @@ export default function Contact() {
     <div className="bg-white min-h-screen font-[family-name:var(--font-dm-sans)]">
       <Navigation />
 
-      <section className="pt-32 pb-24 px-8">
+      <section className="pt-32 pb-24 px-5 md:px-8">
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
-            <h1 className="text-6xl md:text-7xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-8">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-8">
               Get in Touch
             </h1>
             <div className="w-16 h-0.5 bg-[var(--color-accent)] mb-8" />
