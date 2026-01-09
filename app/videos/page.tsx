@@ -10,6 +10,9 @@ export default function Videos() {
   const [isMobile, setIsMobile] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
+  const [video1Playing, setVideo1Playing] = useState(false);
+  const [video2Playing, setVideo2Playing] = useState(false);
+  const [video3Playing, setVideo3Playing] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -42,17 +45,6 @@ export default function Videos() {
     },
   ];
 
-  // Full specials
-  const specials = [
-    {
-      title: "Life's Too Short",
-      year: "2025",
-      duration: "1:02:34",
-      views: "4.2M",
-      video: "/videos/optimized/video3.mp4",
-    },
-  ];
-
   return (
     <div className="bg-white min-h-screen font-[family-name:var(--font-dm-sans)]">
       <Navigation />
@@ -78,7 +70,7 @@ export default function Videos() {
                 Latest Clips
               </h2>
               <a
-                href="https://youtube.com/@papayaw"
+                href="https://youtube.com/@papayawataamle?si=aRybYkIJSxUS-rYY"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs uppercase tracking-wider text-[var(--color-accent)]"
@@ -117,34 +109,72 @@ export default function Videos() {
           {/* Comedy Specials */}
           <section className="px-5 py-6">
             <h2 className="text-lg font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-4">
-              Comedy Specials
+              Featured
             </h2>
 
             <div className="space-y-4">
-              {specials.map((special, i) => (
-                <div key={i} className="flex gap-3">
-                  <div className="relative w-32 flex-shrink-0">
-                    <div className="aspect-video rounded-lg overflow-hidden bg-[var(--color-charcoal)]">
-                      <LazyVideo
-                        src={special.video}
+              {/* YouTube Videos */}
+              {[
+                {
+                  id: "sdTk6npMR_8",
+                  title: "Stand Up Comedy Special",
+                  playing: video1Playing,
+                  setPlaying: setVideo1Playing,
+                  start: 15,
+                },
+                {
+                  id: "mQcZYhHsgL8",
+                  title: "Live at 2927 Comedy Club",
+                  playing: video2Playing,
+                  setPlaying: setVideo2Playing,
+                  start: 0,
+                },
+                {
+                  id: "0Wt-TlAY5-s",
+                  title: "Best of Papa Yaw",
+                  playing: video3Playing,
+                  setPlaying: setVideo3Playing,
+                  start: 0,
+                },
+              ].map((video, index) => (
+                <div key={index}>
+                  <div className="relative aspect-video rounded-lg overflow-hidden bg-[var(--color-charcoal)] shadow-lg">
+                  {video.playing ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${video.id}?start=${video.start}&autoplay=1`}
+                      title="Comedy Special"
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div
+                      className="relative w-full h-full cursor-pointer group"
+                      onClick={() => video.setPlaying(true)}
+                    >
+                      <img
+                        src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                        alt="Comedy Special Thumbnail"
                         className="w-full h-full object-cover"
                       />
+                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full bg-[var(--color-accent)] flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                          <svg
+                            className="w-5 h-5 text-white"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </div>
                     </div>
-                    <div className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] px-1.5 py-0.5 rounded">
-                      {special.duration}
-                    </div>
+                  )}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-[var(--color-charcoal)] mb-1">
-                      {special.title}
-                    </h3>
-                    <p className="text-xs text-[var(--color-gray)] mb-1">
-                      Full Special • {special.year}
-                    </p>
-                    <p className="text-xs text-[var(--color-gray)]">
-                      {special.views} views
-                    </p>
-                  </div>
+                  <p className="text-sm font-medium text-[var(--color-charcoal)] mt-2 truncate">
+                    {video.title}
+                  </p>
                 </div>
               ))}
             </div>
@@ -177,7 +207,7 @@ export default function Videos() {
                   Latest Clips
                 </h2>
                 <a
-                  href="https://youtube.com/@papayaw"
+                  href="https://youtube.com/@papayawataamle?si=aRybYkIJSxUS-rYY"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm uppercase tracking-wider text-[var(--color-accent)] hover:underline"
@@ -221,24 +251,68 @@ export default function Videos() {
                 Comedy Specials
               </h2>
 
-              <div className="max-w-2xl">
-                {specials.map((special, i) => (
-                  <div key={i} className="group cursor-pointer">
-                    <div className="relative aspect-video rounded-xl overflow-hidden bg-[var(--color-charcoal)] shadow-lg mb-4">
-                      <LazyVideo
-                        src={special.video}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
-                      <div className="absolute bottom-3 right-3 bg-black/80 text-white text-xs px-2 py-1 rounded">
-                        {special.duration}
-                      </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {/* YouTube Videos */}
+                {[
+                  {
+                    id: "sdTk6npMR_8",
+                    title: "Stand Up Comedy Special",
+                    playing: video1Playing,
+                    setPlaying: setVideo1Playing,
+                    start: 15,
+                  },
+                  {
+                    id: "mQcZYhHsgL8",
+                    title: "Live at 2927 Comedy Club",
+                    playing: video2Playing,
+                    setPlaying: setVideo2Playing,
+                    start: 0,
+                  },
+                  {
+                    id: "0Wt-TlAY5-s",
+                    title: "Best of Papa Yaw",
+                    playing: video3Playing,
+                    setPlaying: setVideo3Playing,
+                    start: 0,
+                  },
+                ].map((video, index) => (
+                  <div key={index}>
+                    <div className="relative aspect-video rounded-xl overflow-hidden bg-[var(--color-charcoal)] shadow-lg">
+                      {video.playing ? (
+                        <iframe
+                          src={`https://www.youtube.com/embed/${video.id}?start=${video.start}&autoplay=1`}
+                          title="Comedy Special"
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      ) : (
+                        <div
+                          className="relative w-full h-full cursor-pointer group"
+                          onClick={() => video.setPlaying(true)}
+                        >
+                          <img
+                            src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                            alt="Comedy Special Thumbnail"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-12 h-12 rounded-full bg-[var(--color-accent)] flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
+                              <svg
+                                className="w-5 h-5 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    <h3 className="text-xl font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] mb-1 group-hover:text-[var(--color-accent)] transition-colors">
-                      {special.title}
-                    </h3>
-                    <p className="text-[var(--color-gray)]">
-                      Full Special • {special.year} • {special.views} views
+                    <p className="text-base font-medium text-[var(--color-charcoal)] mt-3 truncate">
+                      {video.title}
                     </p>
                   </div>
                 ))}
@@ -260,10 +334,10 @@ export default function Videos() {
                 href="https://youtube.com/@papayaw"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-[var(--color-accent)] text-white hover:bg-[#a33d1e] hover:scale-105 hover:shadow-lg hover:shadow-[var(--color-accent)]/30 transition-all duration-300"
               >
                 <svg
-                  className="w-6 h-6"
+                  className="w-6 h-6 group-hover:scale-110 transition-transform"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >

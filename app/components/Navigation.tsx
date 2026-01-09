@@ -7,11 +7,16 @@ import { useState, useEffect } from "react";
 export default function Navigation() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isHomepage = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+      // Show name after scrolling past ~80% of viewport height
+      setPastHero(window.scrollY > window.innerHeight * 0.8);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -42,14 +47,16 @@ export default function Navigation() {
       <nav
         className={`fixed top-0 w-full z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-white/95 backdrop-blur-md border-b border-gray-200 py-4"
-            : "bg-white/95 backdrop-blur-md py-6"
+            ? "bg-white/95 backdrop-blur-md border-b border-gray-200 py-2 md:py-4"
+            : "bg-white/95 backdrop-blur-md py-3 md:py-6"
         }`}
       >
         <div className="max-w-7xl mx-auto px-8 flex justify-between items-center">
           <Link
             href="/"
-            className="text-xl font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] hover:text-[var(--color-accent)] transition-colors"
+            className={`text-xl font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] hover:text-[var(--color-accent)] transition-all duration-300 ${
+              isHomepage && !pastHero ? "opacity-0 -translate-x-4" : "opacity-100 translate-x-0"
+            }`}
           >
             Papa Yaw Ataamle
           </Link>
