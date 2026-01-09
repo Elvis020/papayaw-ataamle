@@ -114,14 +114,14 @@ export default function Home() {
               </div>
 
               {/* Horizontal Scroll Container */}
-              <div className="flex gap-3 overflow-x-auto px-5 pb-2 snap-x snap-mandatory scrollbar-hide">
+              <div className="flex gap-3 overflow-x-auto pl-5 pr-5 pb-2 snap-x snap-mandatory scroll-pl-5 scrollbar-hide">
                 {shorts.map((short, i) => (
                   <Link
                     key={i}
                     href="/videos"
                     className="flex-shrink-0 snap-start"
                   >
-                    <div className="relative w-28 aspect-[9/16] rounded-xl overflow-hidden bg-[var(--color-charcoal)]">
+                    <div className="relative w-28 aspect-[9/16] rounded-sm overflow-hidden bg-[var(--color-charcoal)]">
                       <img
                         src={short.image}
                         alt={short.title}
@@ -408,8 +408,8 @@ export default function Home() {
                   <div className="grid grid-cols-5 gap-6">
                     {shorts.map((short, i) => (
                       <Link key={i} href="/videos" className="group">
-                        <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-[var(--color-charcoal)] shadow-lg group-hover:shadow-2xl transition-shadow">
-                          <img src={short.image} alt={short.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <div className="relative aspect-[9/16] rounded-sm overflow-hidden bg-[var(--color-charcoal)] shadow-lg group-hover:shadow-2xl transition-shadow">
+                          <img src={short.image} alt={short.title} className="w-full h-full object-cover group-hover:scale-[1.075] transition-transform duration-500" />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                             <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
