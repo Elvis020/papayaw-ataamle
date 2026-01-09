@@ -3,9 +3,13 @@
 import { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
+import LazyVideo from "../components/LazyVideo";
+import VideoModal from "../components/VideoModal";
 
 export default function Videos() {
   const [isMobile, setIsMobile] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -14,22 +18,27 @@ export default function Videos() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Shorts/Clips data - vertical format (local videos)
+  const openVideoModal = (index: number) => {
+    setSelectedVideoIndex(index);
+    setModalOpen(true);
+  };
+
+  // Shorts/Clips data - vertical format (optimized local videos)
   const shorts = [
     {
       title: "Dating in Ghana",
       views: "2.1M",
-      video: "/videos/video1.mp4",
+      video: "/videos/optimized/video1.mp4",
     },
     {
       title: "Airport Security",
       views: "1.8M",
-      video: "/videos/video2.mp4",
+      video: "/videos/optimized/video2.mp4",
     },
     {
       title: "Uber Drivers",
       views: "3.5M",
-      video: "/videos/video4.mov",
+      video: "/videos/optimized/video4.mp4",
     },
   ];
 
@@ -40,7 +49,7 @@ export default function Videos() {
       year: "2025",
       duration: "1:02:34",
       views: "4.2M",
-      video: "/videos/video3.mp4",
+      video: "/videos/optimized/video3.mp4",
     },
   ];
 
@@ -80,15 +89,15 @@ export default function Videos() {
 
             <div className="flex gap-3 overflow-x-auto pl-5 pr-5 pb-2 snap-x snap-mandatory scroll-pl-5 scrollbar-hide">
               {shorts.map((short, i) => (
-                <div key={i} className="flex-shrink-0 snap-start">
+                <div
+                  key={i}
+                  className="flex-shrink-0 snap-start cursor-pointer"
+                  onClick={() => openVideoModal(i)}
+                >
                   <div className="relative w-28 aspect-[9/16] rounded-sm overflow-hidden bg-[var(--color-charcoal)]">
-                    <video
+                    <LazyVideo
                       src={short.video}
                       className="w-full h-full object-cover"
-                      muted
-                      loop
-                      playsInline
-                      autoPlay
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                     <div className="absolute bottom-2 left-2 right-2">
@@ -116,13 +125,9 @@ export default function Videos() {
                 <div key={i} className="flex gap-3">
                   <div className="relative w-32 flex-shrink-0">
                     <div className="aspect-video rounded-lg overflow-hidden bg-[var(--color-charcoal)]">
-                      <video
+                      <LazyVideo
                         src={special.video}
                         className="w-full h-full object-cover"
-                        muted
-                        loop
-                        playsInline
-                        autoPlay
                       />
                     </div>
                     <div className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] px-1.5 py-0.5 rounded">
@@ -183,15 +188,15 @@ export default function Videos() {
 
               <div className="grid grid-cols-3 gap-4">
                 {shorts.map((short, i) => (
-                  <div key={i} className="group cursor-pointer">
+                  <div
+                    key={i}
+                    className="group cursor-pointer"
+                    onClick={() => openVideoModal(i)}
+                  >
                     <div className="relative aspect-[9/16] rounded-xl overflow-hidden bg-[var(--color-charcoal)] shadow-lg group-hover:shadow-xl transition-shadow">
-                      <video
+                      <LazyVideo
                         src={short.video}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        muted
-                        loop
-                        playsInline
-                        autoPlay
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                       <div className="absolute bottom-3 left-3 right-3">
@@ -220,13 +225,9 @@ export default function Videos() {
                 {specials.map((special, i) => (
                   <div key={i} className="group cursor-pointer">
                     <div className="relative aspect-video rounded-xl overflow-hidden bg-[var(--color-charcoal)] shadow-lg mb-4">
-                      <video
+                      <LazyVideo
                         src={special.video}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        muted
-                        loop
-                        playsInline
-                        autoPlay
                       />
                       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                       <div className="absolute bottom-3 right-3 bg-black/80 text-white text-xs px-2 py-1 rounded">
@@ -316,6 +317,14 @@ export default function Videos() {
           animation: slideUp 0.5s ease-out forwards;
         }
       `}</style>
+
+      {/* Video Modal */}
+      <VideoModal
+        videos={shorts}
+        initialIndex={selectedVideoIndex}
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 }

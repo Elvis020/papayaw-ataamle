@@ -4,12 +4,21 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import LazyVideo from "./components/LazyVideo";
+import VideoModal from "./components/VideoModal";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   const heroRef = useRef<HTMLElement>(null);
+
+  const openVideoModal = (index: number) => {
+    setSelectedVideoIndex(index);
+    setModalOpen(true);
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -35,11 +44,11 @@ export default function Home() {
     };
   }, [isMobile]);
 
-  // Shorts data - vertical video format (local videos)
+  // Shorts data - vertical video format (optimized local videos)
   const shorts = [
-    { title: "Dating in Ghana", views: "2.1M", video: "/videos/video1.mp4" },
-    { title: "Airport Security", views: "1.8M", video: "/videos/video2.mp4" },
-    { title: "Uber Drivers", views: "3.5M", video: "/videos/video4.mov" },
+    { title: "Dating in Ghana", views: "2.1M", video: "/videos/optimized/video1.mp4" },
+    { title: "Airport Security", views: "1.8M", video: "/videos/optimized/video2.mp4" },
+    { title: "Uber Drivers", views: "3.5M", video: "/videos/optimized/video4.mp4" },
   ];
 
   return (
@@ -114,19 +123,15 @@ export default function Home() {
               {/* Horizontal Scroll Container */}
               <div className="flex gap-3 overflow-x-auto pl-5 pr-5 pb-2 snap-x snap-mandatory scroll-pl-5 scrollbar-hide">
                 {shorts.map((short, i) => (
-                  <Link
+                  <div
                     key={i}
-                    href="/videos"
-                    className="flex-shrink-0 snap-start"
+                    className="flex-shrink-0 snap-start cursor-pointer"
+                    onClick={() => openVideoModal(i)}
                   >
                     <div className="relative w-28 aspect-[9/16] rounded-sm overflow-hidden bg-[var(--color-charcoal)]">
-                      <video
+                      <LazyVideo
                         src={short.video}
                         className="w-full h-full object-cover"
-                        muted
-                        loop
-                        playsInline
-                        autoPlay
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
@@ -136,7 +141,7 @@ export default function Home() {
                         <p className="text-white/70 text-[10px]">{short.views} views</p>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             </section>
@@ -373,15 +378,15 @@ export default function Home() {
                   {/* Shorts Grid - Vertical Format */}
                   <div className="grid grid-cols-3 gap-6">
                     {shorts.map((short, i) => (
-                      <Link key={i} href="/videos" className="group">
+                      <div
+                        key={i}
+                        className="group cursor-pointer"
+                        onClick={() => openVideoModal(i)}
+                      >
                         <div className="relative aspect-[9/16] rounded-sm overflow-hidden bg-[var(--color-charcoal)] shadow-lg group-hover:shadow-2xl transition-shadow">
-                          <video
+                          <LazyVideo
                             src={short.video}
                             className="w-full h-full object-cover group-hover:scale-[1.075] transition-transform duration-500"
-                            muted
-                            loop
-                            playsInline
-                            autoPlay
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                           <div className="absolute bottom-4 left-4 right-4">
@@ -389,7 +394,7 @@ export default function Home() {
                             <p className="text-white/70 text-sm">{short.views} views</p>
                           </div>
                         </div>
-                      </Link>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -562,6 +567,14 @@ export default function Home() {
           }
         }
       `}</style>
+
+      {/* Video Modal */}
+      <VideoModal
+        videos={shorts}
+        initialIndex={selectedVideoIndex}
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </>
   );
 }
