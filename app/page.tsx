@@ -192,7 +192,7 @@ export default function Home() {
                 </Link>
               </div>
 
-              <div className="flex gap-2 overflow-x-auto px-5 pb-2 snap-x snap-mandatory scrollbar-hide">
+              <div className="flex gap-3 overflow-x-auto pl-5 pr-5 pb-2 snap-x snap-mandatory scroll-pl-5 scrollbar-hide">
                 {[
                   "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=200&h=200&fit=crop",
                   "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200&h=200&fit=crop",
@@ -201,7 +201,7 @@ export default function Home() {
                   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop",
                 ].map((img, i) => (
                   <Link key={i} href="/gallery" className="flex-shrink-0 snap-start">
-                    <div className="w-24 h-24 rounded-lg overflow-hidden">
+                    <div className="w-24 h-24 rounded-sm overflow-hidden">
                       <img src={img} alt="Gallery" className="w-full h-full object-cover" loading="lazy" />
                     </div>
                   </Link>
