@@ -30,7 +30,7 @@ export default function Videos() {
     { youtubeId: "5Kttehrq4wY" },
     { youtubeId: "ntipniWCRUs" },
     { youtubeId: "dpTo6kUtvEQ" },
-    { youtubeId: "ntipniWCRUs" },
+    { youtubeId: "dmuoS5X-8Hk" },
   ];
 
   return (

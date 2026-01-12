@@ -49,7 +49,7 @@ export default function Home() {
     { youtubeId: "5Kttehrq4wY" },
     { youtubeId: "ntipniWCRUs" },
     { youtubeId: "dpTo6kUtvEQ" },
-    { youtubeId: "ntipniWCRUs" },
+    { youtubeId: "dmuoS5X-8Hk" },
   ];
 
   return (
@@ -233,7 +233,7 @@ export default function Home() {
                     href="/gallery"
                     className="flex-shrink-0 snap-start"
                   >
-                    <div className="w-24 h-24 rounded-sm overflow-hidden">
+                    <div className="w-28 h-36 rounded-sm overflow-hidden">
                       <img
                         src={img}
                         alt="Gallery"
