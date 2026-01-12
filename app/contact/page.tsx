@@ -166,23 +166,25 @@ function ContactContent() {
 
 export default function Contact() {
   return (
-    <div className="bg-white min-h-screen font-[family-name:var(--font-dm-sans)]">
+    <div className="bg-white min-h-screen flex flex-col font-[family-name:var(--font-dm-sans)]">
       <Navigation />
 
-      <Suspense fallback={
-        <div className="pt-32 pb-16 px-5 md:px-8">
-          <div className="max-w-3xl mx-auto">
-            <div className="animate-pulse">
-              <div className="h-12 bg-gray-200 rounded w-3/4 mb-8"></div>
-              <div className="w-16 h-0.5 bg-gray-200 mb-8"></div>
-              <div className="h-6 bg-gray-200 rounded w-full mb-2"></div>
-              <div className="h-6 bg-gray-200 rounded w-2/3"></div>
+      <div className="flex-1">
+        <Suspense fallback={
+          <div className="pt-32 pb-16 px-5 md:px-8">
+            <div className="max-w-3xl mx-auto">
+              <div className="animate-pulse">
+                <div className="h-12 bg-gray-200 rounded w-3/4 mb-8"></div>
+                <div className="w-16 h-0.5 bg-gray-200 mb-8"></div>
+                <div className="h-6 bg-gray-200 rounded w-full mb-2"></div>
+                <div className="h-6 bg-gray-200 rounded w-2/3"></div>
+              </div>
             </div>
           </div>
-        </div>
-      }>
-        <ContactContent />
-      </Suspense>
+        }>
+          <ContactContent />
+        </Suspense>
+      </div>
 
       <Footer />
     </div>

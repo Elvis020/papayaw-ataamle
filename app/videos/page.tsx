@@ -43,12 +43,12 @@ export default function Videos() {
   ];
 
   return (
-    <div className="bg-white min-h-screen font-[family-name:var(--font-dm-sans)]">
+    <div className="bg-white min-h-screen flex flex-col font-[family-name:var(--font-dm-sans)]">
       <Navigation />
 
       {isMobile ? (
         /* ===== MOBILE LAYOUT ===== */
-        <main className="pb-8">
+        <main className="pb-8 flex-1 flex flex-col">
           {/* Header */}
           <section className="pt-24 pb-6 px-5">
             <h1 className="text-4xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-4">
@@ -174,11 +174,13 @@ export default function Videos() {
             </div>
           </section>
 
-          <Footer />
+          <div className="mt-auto">
+            <Footer />
+          </div>
         </main>
       ) : (
         /* ===== DESKTOP LAYOUT ===== */
-        <>
+        <div className="flex-1 flex flex-col">
           <section className="pt-32 pb-16 px-5 md:px-8">
             <div className="max-w-7xl mx-auto">
               <p className="text-sm uppercase tracking-widest text-[var(--color-accent)] mb-4">
@@ -344,8 +346,10 @@ export default function Videos() {
             </div>
           </section>
 
-          <Footer />
-        </>
+          <div className="mt-auto">
+            <Footer />
+          </div>
+        </div>
       )}
 
       <style jsx global>{`

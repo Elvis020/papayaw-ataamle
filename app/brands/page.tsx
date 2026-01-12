@@ -38,10 +38,11 @@ export default function Brands() {
   ];
 
   return (
-    <div className="bg-white min-h-screen font-[family-name:var(--font-dm-sans)]">
+    <div className="bg-white min-h-screen flex flex-col font-[family-name:var(--font-dm-sans)]">
       <Navigation />
 
-      <section className="pt-32 pb-24 px-5 md:px-8">
+      <div className="flex-1">
+        <section className="pt-32 pb-24 px-5 md:px-8">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-8">
@@ -130,6 +131,7 @@ export default function Brands() {
           </ScrollReveal>
         </div>
       </section>
+      </div>
 
       <Footer />
       <ScrollToTop />

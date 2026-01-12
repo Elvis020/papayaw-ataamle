@@ -18,9 +18,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="py-6 md:py-8 px-5 md:px-8 border-t border-gray-200 bg-white">
+    <footer className="py-4 md:py-8 px-5 md:px-8 border-t border-gray-200 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-2 md:gap-4">
           {/* Social Icons */}
           <div className="flex justify-center gap-3">
             {socials.map((social, i) => (

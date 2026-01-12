@@ -63,12 +63,12 @@ export default function Home() {
 
   return (
     <>
-      <div className="bg-white min-h-screen font-[family-name:var(--font-dm-sans)]">
+      <div className="bg-white min-h-screen flex flex-col font-[family-name:var(--font-dm-sans)]">
         <Navigation />
 
         {/* ===== MOBILE LAYOUT ===== */}
         {isMobile ? (
-          <main className="pb-8">
+          <main className="pb-8 flex-1 flex flex-col">
             {/* Hero - Compact Mobile with Dark Overlay */}
             <section className="relative bg-[var(--color-charcoal)] pt-14">
               {/* Hero Image with Dark Overlay */}
@@ -338,11 +338,13 @@ export default function Home() {
               </div>
             </section>
 
-            <Footer />
+            <div className="mt-auto">
+              <Footer />
+            </div>
           </main>
         ) : (
           /* ===== DESKTOP LAYOUT ===== */
-          <>
+          <div className="flex-1 flex flex-col">
             {/* Hero Section - Desktop with Parallax */}
             <section
               ref={heroRef}
@@ -737,9 +739,11 @@ export default function Home() {
                 </div>
               </section>
 
-              <Footer />
+              <div className="mt-auto">
+                <Footer />
+              </div>
             </div>
-          </>
+          </div>
         )}
       </div>
 

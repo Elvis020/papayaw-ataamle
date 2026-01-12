@@ -63,12 +63,12 @@ export default function About() {
   ];
 
   return (
-    <div className="bg-white min-h-screen font-[family-name:var(--font-dm-sans)]">
+    <div className="bg-white min-h-screen flex flex-col font-[family-name:var(--font-dm-sans)]">
       <Navigation />
 
       {isMobile ? (
         /* ===== MOBILE LAYOUT ===== */
-        <main className="pb-8">
+        <main className="pb-8 flex-1 flex flex-col">
           {/* Header with Photo */}
           <section className="relative bg-[var(--color-charcoal)]">
             <div className="relative h-[55vh] overflow-hidden">
@@ -163,11 +163,13 @@ export default function About() {
             </div>
           </section>
 
-          <Footer />
+          <div className="mt-auto">
+            <Footer />
+          </div>
         </main>
       ) : (
         /* ===== DESKTOP LAYOUT ===== */
-        <>
+        <div className="flex-1 flex flex-col">
           {/* Hero Section - Asymmetric Layout */}
           <section className="pt-32 px-5 md:px-8 pb-0 overflow-hidden">
             <div className="max-w-7xl mx-auto">
@@ -329,9 +331,11 @@ export default function About() {
             </div>
           </section>
 
-          <Footer />
+          <div className="mt-auto">
+            <Footer />
+          </div>
           <ScrollToTop />
-        </>
+        </div>
       )}
 
       <style jsx global>{`
