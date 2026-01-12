@@ -29,19 +29,16 @@ export default function Videos() {
   // Shorts/Clips data - vertical format (optimized local videos)
   const shorts = [
     {
-      title: "Dating in Ghana",
-      views: "2.1M",
-      video: "/videos/optimized/video1.mp4",
+      title: "FBI shorts",
+      video: "/videos/optimized/video1_v2.mp4",
     },
     {
-      title: "Airport Security",
-      views: "1.8M",
+      title: "The New False",
       video: "/videos/optimized/video2.mp4",
     },
     {
-      title: "Uber Drivers",
-      views: "3.5M",
-      video: "/videos/optimized/video4.mp4",
+      title: "Soho Comedy Night",
+      video: "/videos/optimized/video3.mp4",
     },
   ];
 
@@ -96,9 +93,6 @@ export default function Videos() {
                       <p className="text-white text-xs font-medium line-clamp-1">
                         {short.title}
                       </p>
-                      <p className="text-white/70 text-[10px]">
-                        {short.views} views
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -139,38 +133,38 @@ export default function Videos() {
               ].map((video, index) => (
                 <div key={index}>
                   <div className="relative aspect-video rounded-lg overflow-hidden bg-[var(--color-charcoal)] shadow-lg">
-                  {video.playing ? (
-                    <iframe
-                      src={`https://www.youtube.com/embed/${video.id}?start=${video.start}&autoplay=1`}
-                      title="Comedy Special"
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <div
-                      className="relative w-full h-full cursor-pointer group"
-                      onClick={() => video.setPlaying(true)}
-                    >
-                      <img
-                        src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
-                        alt="Comedy Special Thumbnail"
-                        className="w-full h-full object-cover"
+                    {video.playing ? (
+                      <iframe
+                        src={`https://www.youtube.com/embed/${video.id}?start=${video.start}&autoplay=1`}
+                        title="Comedy Special"
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
                       />
-                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-12 h-12 rounded-full bg-[var(--color-accent)] flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                          <svg
-                            className="w-5 h-5 text-white"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
+                    ) : (
+                      <div
+                        className="relative w-full h-full cursor-pointer group"
+                        onClick={() => video.setPlaying(true)}
+                      >
+                        <img
+                          src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                          alt="Comedy Special Thumbnail"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-full bg-[var(--color-accent)] flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                            <svg
+                              className="w-5 h-5 text-white"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                   </div>
                   <p className="text-sm font-medium text-[var(--color-charcoal)] mt-2 truncate">
                     {video.title}
@@ -179,6 +173,8 @@ export default function Videos() {
               ))}
             </div>
           </section>
+
+          <Footer />
         </main>
       ) : (
         /* ===== DESKTOP LAYOUT ===== */
@@ -232,9 +228,6 @@ export default function Videos() {
                       <div className="absolute bottom-3 left-3 right-3">
                         <p className="text-white text-sm font-medium line-clamp-1">
                           {short.title}
-                        </p>
-                        <p className="text-white/70 text-xs">
-                          {short.views} views
                         </p>
                       </div>
                     </div>
@@ -334,18 +327,19 @@ export default function Videos() {
                 href="https://youtube.com/@papayaw"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-[var(--color-accent)] text-white hover:bg-[#a33d1e] hover:scale-105 hover:shadow-lg hover:shadow-[var(--color-accent)]/30 transition-all duration-300"
+                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-[var(--color-charcoal)] text-white overflow-hidden"
               >
                 <svg
-                  className="w-6 h-6 group-hover:scale-110 transition-transform"
+                  className="w-6 h-6 relative z-10"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                 </svg>
-                <span className="font-medium uppercase tracking-wider">
+                <span className="font-medium uppercase tracking-wider relative z-10">
                   Subscribe on YouTube
                 </span>
+                <div className="absolute inset-0 bg-[var(--color-accent)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
               </a>
             </div>
           </section>

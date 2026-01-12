@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { hasEvents } from "../data/events";
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -33,14 +34,19 @@ export default function Navigation() {
 
   const isActive = (path: string) => pathname === path;
 
-  const navLinks = [
-    { href: "/shows", label: "Shows" },
+  const allNavLinks = [
+    { href: "/shows", label: "Shows", requiresEvents: true },
     { href: "/videos", label: "Videos" },
     { href: "/gallery", label: "Gallery" },
     { href: "/brands", label: "Brands" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact", isAccent: true },
   ];
+
+  // Filter out Shows link if no events
+  const navLinks = allNavLinks.filter(
+    (link) => !link.requiresEvents || hasEvents
+  );
 
   return (
     <>

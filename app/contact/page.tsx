@@ -95,13 +95,16 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={formStatus === 'sending'}
-                className="w-full bg-[var(--color-charcoal)] text-white py-6 text-sm uppercase tracking-widest hover:bg-[var(--color-accent)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group relative w-full bg-[var(--color-charcoal)] text-white py-6 text-sm uppercase tracking-widest overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {formStatus === 'sending'
-                  ? 'Sending...'
-                  : formStatus === 'success'
-                  ? 'Message Sent!'
-                  : 'Send Message'}
+                <span className="relative z-10">
+                  {formStatus === 'sending'
+                    ? 'Sending...'
+                    : formStatus === 'success'
+                    ? 'Message Sent!'
+                    : 'Send Message'}
+                </span>
+                <div className="absolute inset-0 bg-[var(--color-accent)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
               </button>
 
               {formStatus === 'success' && (

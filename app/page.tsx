@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import LazyVideo from "./components/LazyVideo";
 import VideoModal from "./components/VideoModal";
+import { hasEvents } from "./data/events";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -47,18 +48,15 @@ export default function Home() {
   // Shorts data - vertical video format (optimized local videos)
   const shorts = [
     {
-      title: "Dating in Ghana",
-      views: "2.1M",
+      title: "FBI shorts",
       video: "/videos/optimized/video1.mp4",
     },
     {
-      title: "Airport Security",
-      views: "1.8M",
+      title: "The New False",
       video: "/videos/optimized/video2.mp4",
     },
     {
-      title: "Uber Drivers",
-      views: "3.5M",
+      title: "Soho Comedy Night",
       video: "/videos/optimized/video4.mp4",
     },
   ];
@@ -168,9 +166,6 @@ export default function Home() {
                         <p className="text-white text-xs font-medium line-clamp-1">
                           {short.title}
                         </p>
-                        <p className="text-white/70 text-[10px]">
-                          {short.views} views
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -178,40 +173,45 @@ export default function Home() {
               </div>
             </section>
 
-            {/* Next Show - Single Card */}
+            {/* Upcoming Shows */}
             <section className="px-5 py-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)]">
-                  Next Show
+                  Upcoming Shows
                 </h2>
-                <Link
-                  href="/shows"
-                  className="text-xs uppercase tracking-wider text-[var(--color-accent)]"
-                >
-                  All Dates
-                </Link>
+                {hasEvents && (
+                  <Link
+                    href="/shows"
+                    className="text-xs uppercase tracking-wider text-[var(--color-accent)]"
+                  >
+                    All Dates
+                  </Link>
+                )}
               </div>
 
-              <Link
-                href="/shows"
-                className="block bg-[var(--color-charcoal)] text-white p-4 rounded-xl"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-[family-name:var(--font-fraunces)] font-bold">
-                      15
-                    </div>
-                    <div className="text-[10px] uppercase opacity-70">Jan</div>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold">Madison Square Garden</h3>
-                    <p className="text-sm opacity-70">New York, NY</p>
-                  </div>
-                  <div className="bg-[var(--color-accent)] text-[10px] uppercase px-2 py-1 rounded">
-                    Few Left
-                  </div>
+              <div className="bg-[var(--color-light-gray)] rounded-xl p-6 text-center">
+                <div className="w-12 h-12 rounded-full bg-[var(--color-charcoal)]/10 flex items-center justify-center mx-auto mb-3">
+                  <svg
+                    className="w-6 h-6 text-[var(--color-gray)]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
                 </div>
-              </Link>
+                <p className="text-sm text-[var(--color-gray)] mb-1">
+                  No upcoming shows
+                </p>
+                <p className="text-xs text-[var(--color-gray)]/70">
+                  Check back soon for new dates!
+                </p>
+              </div>
             </section>
 
             {/* Gallery - Horizontal Scroll */}
@@ -260,28 +260,34 @@ export default function Home() {
               </p>
               <div className="marquee-mobile">
                 <div className="marquee-content-mobile">
-                  {["KS Electricals", "Kantanka KHPRC", "Benjamin Cargo", "2927 Comedy Club"].map(
-                    (brand, i) => (
-                      <span
-                        key={i}
-                        className="text-lg font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)]/40 whitespace-nowrap mx-6"
-                      >
-                        {brand}
-                      </span>
-                    ),
-                  )}
+                  {[
+                    "KS Electricals",
+                    "Kantanka KHPRC",
+                    "Benjamin Cargo",
+                    "2927 Comedy Club",
+                  ].map((brand, i) => (
+                    <span
+                      key={i}
+                      className="text-lg font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)]/40 whitespace-nowrap mx-6"
+                    >
+                      {brand}
+                    </span>
+                  ))}
                 </div>
                 <div className="marquee-content-mobile" aria-hidden="true">
-                  {["KS Electricals", "Kantanka KHPRC", "Benjamin Cargo", "2927 Comedy Club"].map(
-                    (brand, i) => (
-                      <span
-                        key={i}
-                        className="text-lg font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)]/40 whitespace-nowrap mx-6"
-                      >
-                        {brand}
-                      </span>
-                    ),
-                  )}
+                  {[
+                    "KS Electricals",
+                    "Kantanka KHPRC",
+                    "Benjamin Cargo",
+                    "2927 Comedy Club",
+                  ].map((brand, i) => (
+                    <span
+                      key={i}
+                      className="text-lg font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)]/40 whitespace-nowrap mx-6"
+                    >
+                      {brand}
+                    </span>
+                  ))}
                 </div>
               </div>
             </section>
@@ -294,13 +300,13 @@ export default function Home() {
               <p className="text-sm text-gray-400 mb-4">
                 Bookings & partnerships
               </p>
-              <div className="flex justify-center gap-3">
+              <div className="flex justify-center items-stretch gap-3">
                 <Link
                   href="/contact"
                   className="group w-36 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[var(--color-accent)] text-white text-xs uppercase tracking-widest font-medium hover:scale-105 hover:shadow-lg hover:shadow-[var(--color-accent)]/30 transition-all duration-300"
                 >
                   <svg
-                    className="w-4 h-4 group-hover:scale-110 transition-transform"
+                    className="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -312,7 +318,7 @@ export default function Home() {
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                     />
                   </svg>
-                  Form
+                  <span>Form</span>
                 </Link>
                 <a
                   href="https://wa.me/233503287620"
@@ -321,13 +327,13 @@ export default function Home() {
                   className="group w-36 inline-flex items-center justify-center gap-2 px-4 py-3 bg-white/10 backdrop-blur-sm text-white text-xs uppercase tracking-widest font-medium hover:bg-white hover:text-[var(--color-charcoal)] hover:scale-105 transition-all duration-300"
                 >
                   <svg
-                    className="w-4 h-4 group-hover:scale-110 transition-transform"
+                    className="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                   </svg>
-                  WhatsApp
+                  <span>WhatsApp</span>
                 </a>
               </div>
             </section>
@@ -391,20 +397,22 @@ export default function Home() {
                   </p>
 
                   <div className="flex gap-4">
-                    <Link
-                      href="/shows"
-                      className="group relative px-8 py-4 bg-[var(--color-charcoal)] text-white text-sm uppercase tracking-widest overflow-hidden"
-                    >
-                      <span className="relative z-10">Upcoming Shows</span>
-                      <div className="absolute inset-0 bg-[var(--color-accent)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
-                    </Link>
+                    {hasEvents && (
+                      <Link
+                        href="/shows"
+                        className="group relative px-8 py-4 bg-[var(--color-charcoal)] text-white text-sm uppercase tracking-widest overflow-hidden"
+                      >
+                        <span className="relative z-10">Upcoming Shows</span>
+                        <div className="absolute inset-0 bg-[var(--color-accent)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
+                      </Link>
+                    )}
                     <Link
                       href="/videos"
-                      className="group px-8 py-4 border-2 border-[var(--color-charcoal)] text-[var(--color-charcoal)] text-sm uppercase tracking-widest hover:bg-[var(--color-charcoal)] hover:text-white transition-all flex items-center gap-2"
+                      className="group relative px-8 py-4 border-2 border-[var(--color-charcoal)] text-[var(--color-charcoal)] text-sm uppercase tracking-widest overflow-hidden flex items-center gap-2 hover:text-white hover:border-[var(--color-accent)] transition-colors duration-300"
                     >
-                      <span>Watch Clips</span>
+                      <span className="relative z-10">Watch Clips</span>
                       <svg
-                        className="w-4 h-4"
+                        className="w-4 h-4 relative z-10"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -422,6 +430,7 @@ export default function Home() {
                           d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                       </svg>
+                      <div className="absolute inset-0 bg-[var(--color-accent)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
                     </Link>
                   </div>
 
@@ -481,7 +490,7 @@ export default function Home() {
                         <div className="text-xs uppercase tracking-widest opacity-80">
                           Partnered
                         </div>
-                        <div className="text-base font-bold">3+ Brands</div>
+                        <div className="text-base font-bold">5+ Brands</div>
                       </div>
                     </div>
                   </div>
@@ -553,9 +562,6 @@ export default function Home() {
                             <p className="text-white font-medium mb-1">
                               {short.title}
                             </p>
-                            <p className="text-white/70 text-sm">
-                              {short.views} views
-                            </p>
                           </div>
                         </div>
                       </div>
@@ -570,85 +576,22 @@ export default function Home() {
                   <div className="flex items-center justify-between mb-12">
                     <div>
                       <p className="text-sm uppercase tracking-widest text-[var(--color-accent)] mb-2">
-                        On Tour
+                        Live Events
                       </p>
                       <h2 className="text-4xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)]">
                         Upcoming Shows
                       </h2>
                     </div>
-                    <Link
-                      href="/shows"
-                      className="group flex items-center gap-2 text-[var(--color-charcoal)] hover:text-[var(--color-accent)] transition-colors"
-                    >
-                      <span className="text-sm uppercase tracking-widest">
-                        All Dates
-                      </span>
-                      <svg
-                        className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
-                    </Link>
-                  </div>
-
-                  <div className="space-y-4">
-                    {[
-                      {
-                        date: "Jan 15",
-                        venue: "Madison Square Garden",
-                        city: "New York, NY",
-                        status: "Few Left",
-                      },
-                      {
-                        date: "Jan 22",
-                        venue: "The Comedy Store",
-                        city: "Los Angeles, CA",
-                        status: "On Sale",
-                      },
-                      {
-                        date: "Feb 5",
-                        venue: "Ryman Auditorium",
-                        city: "Nashville, TN",
-                        status: "On Sale",
-                      },
-                    ].map((show, i) => (
+                    {hasEvents && (
                       <Link
-                        key={i}
                         href="/shows"
-                        className="group flex items-center gap-8 p-6 bg-white border border-gray-200 hover:border-[var(--color-accent)] hover:shadow-lg transition-all"
+                        className="group flex items-center gap-2 text-[var(--color-charcoal)] hover:text-[var(--color-accent)] transition-colors"
                       >
-                        <div className="text-center min-w-[80px]">
-                          <div className="text-3xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)]">
-                            {show.date.split(" ")[1]}
-                          </div>
-                          <div className="text-xs uppercase text-[var(--color-gray)]">
-                            {show.date.split(" ")[0]}
-                          </div>
-                        </div>
-                        <div className="w-px h-12 bg-gray-200" />
-                        <div className="flex-1">
-                          <h3 className="text-xl font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] group-hover:text-[var(--color-accent)] transition-colors">
-                            {show.venue}
-                          </h3>
-                          <p className="text-sm text-[var(--color-gray)]">
-                            {show.city}
-                          </p>
-                        </div>
-                        <span
-                          className={`text-xs uppercase tracking-wider px-3 py-1 ${show.status === "Few Left" ? "bg-[var(--color-accent)] text-white" : "bg-gray-100 text-[var(--color-charcoal)]"}`}
-                        >
-                          {show.status}
+                        <span className="text-sm uppercase tracking-widest">
+                          All Dates
                         </span>
                         <svg
-                          className="w-5 h-5 text-[var(--color-gray)] group-hover:text-[var(--color-accent)] group-hover:translate-x-1 transition-all"
+                          className="w-4 h-4 group-hover:translate-x-1 transition-transform"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -657,11 +600,35 @@ export default function Home() {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth={2}
-                            d="M9 5l7 7-7 7"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
                           />
                         </svg>
                       </Link>
-                    ))}
+                    )}
+                  </div>
+
+                  <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
+                    <div className="w-16 h-16 rounded-full bg-[var(--color-charcoal)]/10 flex items-center justify-center mx-auto mb-4">
+                      <svg
+                        className="w-8 h-8 text-[var(--color-gray)]"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] mb-2">
+                      No upcoming shows
+                    </h3>
+                    <p className="text-[var(--color-gray)]">
+                      Check back soon for new dates and locations!
+                    </p>
                   </div>
                 </div>
               </section>
@@ -731,13 +698,13 @@ export default function Home() {
                   <p className="text-gray-400 text-lg mb-8">
                     For bookings, brand partnerships, or media inquiries.
                   </p>
-                  <div className="flex justify-center gap-5">
+                  <div className="flex justify-center items-stretch gap-5">
                     <Link
                       href="/contact"
                       className="group w-52 inline-flex items-center justify-center gap-3 px-8 py-4 bg-[var(--color-accent)] text-white text-sm uppercase tracking-widest font-medium hover:scale-105 hover:shadow-xl hover:shadow-[var(--color-accent)]/40 transition-all duration-300"
                     >
                       <svg
-                        className="w-5 h-5 group-hover:scale-110 transition-transform"
+                        className="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -758,7 +725,7 @@ export default function Home() {
                       className="group w-52 inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-sm text-white text-sm uppercase tracking-widest font-medium hover:bg-white hover:text-[var(--color-charcoal)] hover:scale-105 hover:shadow-xl transition-all duration-300"
                     >
                       <svg
-                        className="w-5 h-5 group-hover:scale-110 transition-transform"
+                        className="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >

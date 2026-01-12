@@ -19,28 +19,41 @@ export default function About() {
 
   // Stats data
   const stats = [
-    { number: "10+", label: "Years" },
-    { number: "500+", label: "Shows" },
-    { number: "10M+", label: "Followers" },
-    { number: "15+", label: "Partners" },
+    { number: "5+", label: "Years" },
+    { number: "50+", label: "Shows" },
+    { number: "100+", label: "Followers" },
+    { number: "5+", label: "Partners" },
   ];
 
-  // Achievements data for accordion
+  // Achievements data - Venues is 3rd for symmetrical grid layout
   const achievements = [
     {
       id: "television",
       title: "Television",
-      items: ["The Tonight Show", "Comedy Central", "Late Night appearances"],
-    },
-    {
-      id: "venues",
-      title: "Venues",
-      items: ["Comedy Cellar NYC", "Just for Laughs", "500+ shows nationwide"],
+      items: [
+        "Half Serious Show (GHOne tv)",
+        "The hahaha show (Tarkwa)",
+        "WMT Show 3fm - Radio",
+      ],
     },
     {
       id: "digital",
       title: "Digital",
-      items: ["10M+ social followers", "100M+ video views", "Weekly podcast"],
+      items: ["100+ social followers"],
+    },
+    {
+      id: "venues",
+      title: "Venues",
+      items: [
+        "2927 comedy club (Accra)",
+        "Comedy Express (Accra)",
+        "Comedy Bar (Accra)",
+        "Kumasi Comedy Show (Kumasi)",
+        "Lemon Stand Comedy Club (Singapore)",
+        "East Coast Comedy Club (Singapore)",
+        "Jinx Comedy (Singapore)",
+        "Jokeground (Togo)",
+      ],
     },
     {
       id: "brands",
@@ -118,61 +131,39 @@ export default function About() {
             </p>
           </section>
 
-          {/* Achievements Accordion */}
+          {/* Achievements Grid */}
           <section className="px-5 pb-6">
             <h2 className="text-xs uppercase tracking-widest text-[var(--color-gray)] mb-3">
               Highlights
             </h2>
-            <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-3 auto-rows-fr">
               {achievements.map((section) => (
                 <div
                   key={section.id}
-                  className="border border-gray-200 rounded-lg overflow-hidden"
+                  className={`border border-gray-200 rounded-lg p-4 ${
+                    section.id === "venues" ? "col-span-2" : ""
+                  }`}
                 >
-                  <button
-                    onClick={() =>
-                      setExpandedSection(
-                        expandedSection === section.id ? null : section.id,
-                      )
-                    }
-                    className="w-full flex items-center justify-between p-4 text-left"
-                  >
-                    <span className="font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)]">
-                      {section.title}
-                    </span>
-                    <svg
-                      className={`w-5 h-5 text-[var(--color-gray)] transition-transform ${expandedSection === section.id ? "rotate-180" : ""}`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </button>
-                  {expandedSection === section.id && (
-                    <div className="px-4 pb-4 pt-0">
-                      <ul className="space-y-1">
-                        {section.items.map((item, i) => (
-                          <li
-                            key={i}
-                            className="text-sm text-[var(--color-gray)] flex items-center gap-2"
-                          >
-                            <span className="w-1 h-1 bg-[var(--color-accent)] rounded-full" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  <h3 className="font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] mb-2">
+                    {section.title}
+                  </h3>
+                  <ul className="space-y-1">
+                    {section.items.map((item, i) => (
+                      <li
+                        key={i}
+                        className="text-xs text-[var(--color-gray)] flex items-start gap-2"
+                      >
+                        <span className="w-1 h-1 bg-[var(--color-accent)] rounded-full mt-1.5 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               ))}
             </div>
           </section>
+
+          <Footer />
         </main>
       ) : (
         /* ===== DESKTOP LAYOUT ===== */
@@ -246,16 +237,24 @@ export default function About() {
                       The Journey
                     </h2>
                     <p className="text-xl text-[var(--color-charcoal)] leading-relaxed mb-8">
-                      I've been performing stand-up comedy for over a decade,
-                      bringing laughter to audiences across the country. My
-                      comedy blends sharp observational humor with personal
-                      storytelling, creating moments that resonate long after
-                      the show ends.
+                      Papa Yaw Ataamle is a multi-award-winning stand-up
+                      comedian, comic influencer, and brand communicator known
+                      for transforming everyday realities into intelligent,
+                      relatable humor that connects audiences across cultures.
+                    </p>
+                    <p className="text-xl text-[var(--color-charcoal)] leading-relaxed mb-8">
+                      In 2025, he was named Comic Influencer of the Year at the
+                      Ghana Comedy Awards, a recognition that reflects years of
+                      consistency, growth, and impact. He has headlined four
+                      comedy specials and performed on nearly every major comedy
+                      stage in Ghana.
                     </p>
                     <p className="text-xl text-[var(--color-charcoal)] leading-relaxed">
-                      Beyond the stage, I've built a thriving digital presence
-                      as a content creator, connecting with millions through
-                      social media, podcasts, and video content.
+                      His work has expanded beyond borders with the launch of
+                      his international comedy world tour, which has already
+                      recorded successful performances in Singapore and Togo,
+                      marking a new chapter in taking Ghanaian comedy to global
+                      audiences.
                     </p>
                   </div>
                 </ScrollReveal>
@@ -267,16 +266,25 @@ export default function About() {
                       The Work
                     </h2>
                     <p className="text-xl text-[var(--color-charcoal)] leading-relaxed mb-8">
-                      My performances have been featured at the Comedy Cellar,
-                      Caroline's on Broadway, and the Just for Laughs festival.
-                      I've headlined tours, opened for industry legends, and
-                      created content that's been viewed over 100 million times.
+                      Beyond the stage, Papa Yaw Ataamle works with brands as a
+                      trusted ambassador and strategic marketing partner. He
+                      currently represents Kantanka Immulate Herbal Supplement,
+                      KS Electricals, Benjamin Cargo Logistics, and Tealeys.
+                      Through his digital marketing company, he helps brands
+                      communicate effectively using humor, storytelling, and
+                      insight that deliver measurable results.
+                    </p>
+                    <p className="text-xl text-[var(--color-charcoal)] leading-relaxed mb-8">
+                      He has been featured on major media platforms including
+                      TV3 Showbiz 360, GH One TV, Joy Prime, Adom TV, UTV,
+                      Kantanka TV, and 3FM, and has appeared in national
+                      advertising campaigns, including an Eazzy Paint TV
+                      commercial.
                     </p>
                     <p className="text-xl text-[var(--color-charcoal)] leading-relaxed">
-                      My work spans comedy specials, brand collaborations, and
-                      creative partnerships with leading companies, always with
-                      the goal of connecting with audiences through authentic,
-                      thoughtful humor.
+                      At the heart of his work is impact—making people laugh,
+                      helping brands grow, and representing African comedy with
+                      excellence on both local and international stages.
                     </p>
                   </div>
                 </ScrollReveal>
@@ -293,67 +301,22 @@ export default function About() {
                 </h2>
               </ScrollReveal>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[
-                  {
-                    title: "Television",
-                    items: [
-                      "The Tonight Show",
-                      "Comedy Central",
-                      "Late Night appearances",
-                    ],
-                  },
-                  {
-                    title: "Venues",
-                    items: [
-                      "Comedy Cellar NYC",
-                      "Just for Laughs",
-                      "500+ shows nationwide",
-                    ],
-                  },
-                  {
-                    title: "Digital",
-                    items: [
-                      "10M+ social followers",
-                      "100M+ video views",
-                      "Weekly podcast",
-                    ],
-                  },
-                  {
-                    title: "Brands",
-                    items: [
-                      "Nike Partnership",
-                      "Netflix Specials",
-                      "15+ collaborations",
-                    ],
-                  },
-                  {
-                    title: "Tours",
-                    items: [
-                      "Headlined 5 tours",
-                      "50+ cities",
-                      "Sold-out shows",
-                    ],
-                  },
-                  {
-                    title: "Recognition",
-                    items: [
-                      "Festival awards",
-                      "Industry acclaim",
-                      "Growing fanbase",
-                    ],
-                  },
-                ].map((section, index) => (
-                  <ScrollReveal key={index} delay={index * 0.1}>
-                    <div className="p-8 border border-gray-200 hover:border-[var(--color-accent)] transition-colors group">
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
+                {achievements.map((section, index) => (
+                  <ScrollReveal
+                    key={index}
+                    delay={index * 0.1}
+                    className={section.id === "venues" ? "lg:col-span-2" : ""}
+                  >
+                    <div className="h-full p-8 border border-gray-200 hover:border-[var(--color-accent)] transition-colors group">
                       <h3 className="text-xl font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] mb-4">
                         {section.title}
                       </h3>
-                      <ul className="space-y-2">
+                      <ul className={`space-y-2 ${section.id === "venues" ? "columns-2 gap-x-6" : ""}`}>
                         {section.items.map((item, i) => (
                           <li
                             key={i}
-                            className="text-[var(--color-gray)] group-hover:text-[var(--color-charcoal)] transition-colors"
+                            className={`text-[var(--color-gray)] group-hover:text-[var(--color-charcoal)] transition-colors ${section.id === "venues" ? "break-inside-avoid" : ""}`}
                           >
                             • {item}
                           </li>

@@ -121,9 +121,10 @@ export default function Brands() {
               </p>
               <Link
                 href="/contact"
-                className="inline-block border-2 border-[var(--color-charcoal)] text-[var(--color-charcoal)] px-8 py-4 text-sm uppercase tracking-widest hover:bg-[var(--color-charcoal)] hover:text-white transition-all"
+                className="group relative inline-block border-2 border-[var(--color-charcoal)] text-[var(--color-charcoal)] px-8 py-4 text-sm uppercase tracking-widest overflow-hidden hover:text-white hover:border-[var(--color-accent)] transition-colors duration-300"
               >
-                Get in Touch
+                <span className="relative z-10">Get in Touch</span>
+                <div className="absolute inset-0 bg-[var(--color-accent)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
               </Link>
             </div>
           </ScrollReveal>
