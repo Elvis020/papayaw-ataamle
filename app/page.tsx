@@ -302,7 +302,7 @@ export default function Home() {
               </p>
               <div className="flex justify-center items-stretch gap-3">
                 <Link
-                  href="/contact"
+                  href="/contact?direct=form"
                   className="group w-36 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[var(--color-accent)] text-white text-xs uppercase tracking-widest font-medium hover:scale-105 hover:shadow-lg hover:shadow-[var(--color-accent)]/30 transition-all duration-300"
                 >
                   <svg
@@ -700,7 +700,7 @@ export default function Home() {
                   </p>
                   <div className="flex justify-center items-stretch gap-5">
                     <Link
-                      href="/contact"
+                      href="/contact?direct=form"
                       className="group w-52 inline-flex items-center justify-center gap-3 px-8 py-4 bg-[var(--color-accent)] text-white text-sm uppercase tracking-widest font-medium hover:scale-105 hover:shadow-xl hover:shadow-[var(--color-accent)]/40 transition-all duration-300"
                     >
                       <svg
