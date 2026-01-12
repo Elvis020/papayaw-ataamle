@@ -173,14 +173,11 @@ export default function VideoModal({
         <div className="relative aspect-[9/16] bg-black rounded-2xl overflow-hidden shadow-2xl">
           <iframe
             key={currentVideo.youtubeId}
-            src={`https://www.youtube.com/embed/${currentVideo.youtubeId}?autoplay=1&loop=1&playlist=${currentVideo.youtubeId}&controls=0&modestbranding=1&rel=0&showinfo=0&fs=0`}
+            src={`https://www.youtube.com/embed/${currentVideo.youtubeId}?autoplay=1&loop=1&playlist=${currentVideo.youtubeId}&controls=1&modestbranding=1&rel=0&playsinline=1`}
             className="w-full h-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
-
-          {/* Swipe overlay for touch gestures (covers iframe) */}
-          <div className="absolute inset-0 z-30 md:hidden" />
 
           {/* Progress bars (stories style) */}
           <div className="absolute top-3 left-3 right-3 flex gap-1 z-40">
