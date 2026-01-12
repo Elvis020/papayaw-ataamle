@@ -179,6 +179,26 @@ export default function VideoModal({
             allowFullScreen
           />
 
+          {/* Navigation tap zones on edges (mobile) */}
+          {currentIndex > 0 && (
+            <div
+              className="absolute top-0 left-0 w-12 h-full z-30 md:hidden"
+              onClick={(e) => {
+                e.stopPropagation();
+                goToPrev();
+              }}
+            />
+          )}
+          {currentIndex < videos.length - 1 && (
+            <div
+              className="absolute top-0 right-0 w-12 h-full z-30 md:hidden"
+              onClick={(e) => {
+                e.stopPropagation();
+                goToNext();
+              }}
+            />
+          )}
+
           {/* Progress bars (stories style) */}
           <div className="absolute top-3 left-3 right-3 flex gap-1 z-40">
             {videos.map((_, i) => (
