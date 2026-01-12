@@ -2,9 +2,11 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import VideoModal from "./components/VideoModal";
+import ShortPreview from "./components/ShortPreview";
 import { hasEvents } from "./data/events";
 
 export default function Home() {
@@ -64,18 +66,21 @@ export default function Home() {
             <section className="relative bg-[var(--color-charcoal)] pt-14">
               {/* Hero Image with Dark Overlay */}
               <div className="relative h-[60vh] overflow-hidden">
-                <img
+                <Image
                   src="/images/profile/image00012.jpeg"
                   alt="Papa Yaw Ataamle"
-                  className="w-full h-full object-cover object-[center_30%] animate-fade-in"
+                  fill
+                  className="object-cover object-[center_30%] animate-fade-in"
+                  priority
+                  sizes="100vw"
                 />
                 {/* Dark gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-charcoal)] via-[var(--color-charcoal)]/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-charcoal)] via-[var(--color-charcoal)]/80 to-black/30" />
 
                 {/* Content overlaid on image */}
                 <div className="absolute inset-0 flex flex-col justify-end p-5 pb-8">
                   <p
-                    className="text-xs uppercase tracking-[0.2em] text-[var(--color-accent)] mb-2 font-medium animate-slide-up"
+                    className="text-xs uppercase tracking-[0.2em] text-[var(--color-accent)] mb-2 font-medium animate-slide-up drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
                     style={{ animationDelay: "0.1s" }}
                   >
                     Stand-Up Comedian
@@ -97,7 +102,7 @@ export default function Home() {
 
                   {/* Stats Row */}
                   <div
-                    className="flex gap-6 py-4 border-t border-white/20 animate-fade-in"
+                    className="flex justify-between py-4 border-t border-white/20 animate-fade-in"
                     style={{ animationDelay: "0.5s" }}
                   >
                     <div className="text-center">
@@ -142,25 +147,13 @@ export default function Home() {
                 {shorts.map((short, i) => (
                   <div
                     key={i}
-                    className="flex-shrink-0 snap-start cursor-pointer"
-                    onClick={() => openVideoModal(i)}
+                    className="flex-shrink-0 snap-start"
                   >
-                    <div className="relative w-28 aspect-[9/16] rounded-sm overflow-hidden bg-[var(--color-charcoal)]">
-                      <img
-                        src={`https://img.youtube.com/vi/${short.youtubeId}/hqdefault.jpg`}
-                        alt="YouTube Short"
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                      {/* Play icon */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                          <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
+                    <ShortPreview
+                      youtubeId={short.youtubeId}
+                      onClick={() => openVideoModal(i)}
+                      className="w-28 aspect-[9/16] rounded-sm"
+                    />
                   </div>
                 ))}
               </div>
@@ -233,12 +226,13 @@ export default function Home() {
                     href="/gallery"
                     className="flex-shrink-0 snap-start"
                   >
-                    <div className="w-28 h-36 rounded-sm overflow-hidden">
-                      <img
+                    <div className="w-28 h-36 rounded-sm overflow-hidden relative">
+                      <Image
                         src={img}
                         alt="Gallery"
-                        className="w-full h-full object-cover"
-                        loading="lazy"
+                        fill
+                        className="object-cover"
+                        sizes="112px"
                       />
                     </div>
                   </Link>
@@ -429,21 +423,25 @@ export default function Home() {
                     </Link>
                   </div>
 
-                  <div className="flex gap-8 mt-16 pt-8 border-t border-gray-200">
-                    {[
-                      { num: "10M+", label: "Followers" },
-                      { num: "500+", label: "Shows" },
-                      { num: "100M+", label: "Views" },
-                    ].map((stat, i) => (
-                      <div key={i}>
-                        <div className="text-3xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)]">
-                          {stat.num}
-                        </div>
-                        <div className="text-xs uppercase tracking-wider text-[var(--color-gray)]">
-                          {stat.label}
-                        </div>
+                  <div className="flex justify-between mt-16 pt-8 border-t border-gray-200 max-w-md">
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-[var(--color-charcoal)]">10M+</div>
+                      <div className="text-[10px] uppercase text-[var(--color-gray)]">
+                        Followers
                       </div>
-                    ))}
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-[var(--color-charcoal)]">500+</div>
+                      <div className="text-[10px] uppercase text-[var(--color-gray)]">
+                        Shows
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-[var(--color-charcoal)]">100M+</div>
+                      <div className="text-[10px] uppercase text-[var(--color-gray)]">
+                        Views
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -463,10 +461,13 @@ export default function Home() {
                   <div className="absolute inset-0 flex items-center justify-center p-12">
                     <div className="relative group w-full max-w-md">
                       <div className="relative aspect-[3/4] overflow-hidden shadow-2xl">
-                        <img
+                        <Image
                           src="/images/profile/image00012.jpeg"
                           alt="Papa Yaw Ataamle"
-                          className="w-full h-full object-cover object-top"
+                          fill
+                          className="object-cover object-top"
+                          priority
+                          sizes="(max-width: 768px) 100vw, 400px"
                         />
                       </div>
                       <div className="absolute -top-4 -right-4 w-full h-full border-2 border-[var(--color-accent)] -z-10" />
@@ -544,25 +545,13 @@ export default function Home() {
                     {shorts.map((short, i) => (
                       <div
                         key={i}
-                        className="group cursor-pointer"
-                        onClick={() => openVideoModal(i)}
+                        className="group"
                       >
-                        <div className="relative aspect-[9/16] rounded-xl overflow-hidden bg-[var(--color-charcoal)] shadow-lg group-hover:shadow-2xl transition-shadow">
-                          <img
-                            src={`https://img.youtube.com/vi/${short.youtubeId}/hqdefault.jpg`}
-                            alt="YouTube Short"
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                          {/* Play icon */}
-                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                              <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z" />
-                              </svg>
-                            </div>
-                          </div>
-                        </div>
+                        <ShortPreview
+                          youtubeId={short.youtubeId}
+                          onClick={() => openVideoModal(i)}
+                          className="aspect-[9/16] rounded-xl shadow-lg group-hover:shadow-2xl transition-shadow"
+                        />
                       </div>
                     ))}
                   </div>
@@ -834,18 +823,15 @@ export default function Home() {
         }
 
         .animate-fade-in {
-          animation: fadeIn 0.6s ease-out forwards;
-          opacity: 0;
+          animation: fadeIn 0.6s ease-out both;
         }
 
         .animate-slide-up {
-          animation: slideUp 0.5s ease-out forwards;
-          opacity: 0;
+          animation: slideUp 0.5s ease-out both;
         }
 
         .animate-slide-down {
-          animation: slideDown 0.4s ease-out forwards;
-          opacity: 0;
+          animation: slideDown 0.4s ease-out both;
         }
 
         /* Hide scrollbar for horizontal scroll */

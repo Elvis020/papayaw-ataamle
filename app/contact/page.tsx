@@ -21,11 +21,25 @@ function ContactContent() {
     e.preventDefault();
     setFormStatus('sending');
 
-    setTimeout(() => {
-      setFormStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-      setTimeout(() => setFormStatus(''), 3000);
-    }, 1000);
+    try {
+      const response = await fetch('https://formspree.io/f/xdaaokyy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setFormStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setFormStatus(''), 5000);
+      } else {
+        setFormStatus('error');
+        setTimeout(() => setFormStatus(''), 5000);
+      }
+    } catch {
+      setFormStatus('error');
+      setTimeout(() => setFormStatus(''), 5000);
+    }
   };
 
   return (
@@ -154,6 +168,11 @@ function ContactContent() {
               {formStatus === 'success' && (
                 <p className="text-[var(--color-accent)] text-center">
                   Thanks for reaching out. I'll respond soon.
+                </p>
+              )}
+              {formStatus === 'error' && (
+                <p className="text-red-500 text-center">
+                  Something went wrong. Please try again or use WhatsApp.
                 </p>
               )}
             </form>

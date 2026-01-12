@@ -103,17 +103,17 @@ export default function Navigation() {
           >
             <div className="w-6 h-5 relative flex flex-col justify-between">
               <span
-                className={`w-full h-0.5 bg-[var(--color-charcoal)] transition-all duration-300 ${
+                className={`w-full h-0.5 bg-[var(--color-accent)] transition-all duration-300 ${
                   mobileMenuOpen ? "rotate-45 translate-y-2" : ""
                 }`}
               />
               <span
-                className={`w-full h-0.5 bg-[var(--color-charcoal)] transition-all duration-300 ${
+                className={`w-full h-0.5 bg-[var(--color-accent)] transition-all duration-300 ${
                   mobileMenuOpen ? "opacity-0" : ""
                 }`}
               />
               <span
-                className={`w-full h-0.5 bg-[var(--color-charcoal)] transition-all duration-300 ${
+                className={`w-full h-0.5 bg-[var(--color-accent)] transition-all duration-300 ${
                   mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
                 }`}
               />

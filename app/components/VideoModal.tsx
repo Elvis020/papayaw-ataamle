@@ -23,6 +23,10 @@ export default function VideoModal({
   const [isClosing, setIsClosing] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Touch/swipe state
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const [swipeOffset, setSwipeOffset] = useState(0);
+
   const currentVideo = videos[currentIndex];
 
   // Reset index when modal opens
@@ -30,6 +34,7 @@ export default function VideoModal({
     if (isOpen) {
       setCurrentIndex(initialIndex);
       setIsClosing(false);
+      setSwipeOffset(0);
     }
   }, [isOpen, initialIndex]);
 
@@ -71,17 +76,56 @@ export default function VideoModal({
   }, [onClose]);
 
   // Navigate to next/previous video
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     if (currentIndex < videos.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     }
-  };
+  }, [currentIndex, videos.length]);
 
-  const goToPrev = () => {
+  const goToPrev = useCallback(() => {
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
     }
-  };
+  }, [currentIndex]);
+
+  // Swipe gesture handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+    setSwipeOffset(0);
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+    const deltaX = e.touches[0].clientX - touchStartRef.current.x;
+    setSwipeOffset(deltaX);
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+
+    const deltaX = e.changedTouches[0].clientX - touchStartRef.current.x;
+    const deltaY = e.changedTouches[0].clientY - touchStartRef.current.y;
+    const SWIPE_THRESHOLD = 50;
+
+    // Horizontal swipe
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+      if (deltaX > 0) {
+        goToPrev();
+      } else {
+        goToNext();
+      }
+    }
+    // Vertical swipe down to close
+    else if (deltaY > SWIPE_THRESHOLD && Math.abs(deltaY) > Math.abs(deltaX)) {
+      handleClose();
+    }
+
+    touchStartRef.current = null;
+    setSwipeOffset(0);
+  }, [goToNext, goToPrev, handleClose]);
 
   if (!isOpen) return null;
 
@@ -117,6 +161,13 @@ export default function VideoModal({
         ref={containerRef}
         className="relative max-w-sm w-full mx-4"
         onClick={(e) => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        style={{
+          transform: `translateX(${swipeOffset * 0.3}px)`,
+          transition: swipeOffset === 0 ? "transform 0.2s ease-out" : "none",
+        }}
       >
         {/* YouTube Short */}
         <div className="relative aspect-[9/16] bg-black rounded-2xl overflow-hidden shadow-2xl">
@@ -128,31 +179,8 @@ export default function VideoModal({
             allowFullScreen
           />
 
-          {/* Tap zones for mobile navigation */}
-          <div
-            className="absolute top-0 left-0 w-1/3 h-full md:hidden z-30"
-            onClick={(e) => {
-              e.stopPropagation();
-              goToPrev();
-            }}
-            onTouchEnd={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              goToPrev();
-            }}
-          />
-          <div
-            className="absolute top-0 right-0 w-1/3 h-full md:hidden z-30"
-            onClick={(e) => {
-              e.stopPropagation();
-              goToNext();
-            }}
-            onTouchEnd={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              goToNext();
-            }}
-          />
+          {/* Swipe overlay for touch gestures (covers iframe) */}
+          <div className="absolute inset-0 z-30 md:hidden" />
 
           {/* Progress bars (stories style) */}
           <div className="absolute top-3 left-3 right-3 flex gap-1 z-40">
