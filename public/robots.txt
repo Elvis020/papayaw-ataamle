@@ -1,0 +1,10 @@
+# robots.txt for papayawataamle.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://papayawataamle.com/sitemap.xml
+
+# Disallow admin or private paths (if any)
+Disallow: /api/

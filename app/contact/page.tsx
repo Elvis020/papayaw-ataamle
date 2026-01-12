@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 
-export default function Contact() {
+function ContactContent() {
   const searchParams = useSearchParams();
   const directToForm = searchParams.get('direct') === 'form';
 
@@ -29,9 +29,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-white min-h-screen font-[family-name:var(--font-dm-sans)]">
-      <Navigation />
-
+    <>
       <section className="pt-32 pb-16 px-5 md:px-8">
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
@@ -162,6 +160,29 @@ export default function Contact() {
           </ScrollReveal>
         </div>
       </section>
+    </>
+  );
+}
+
+export default function Contact() {
+  return (
+    <div className="bg-white min-h-screen font-[family-name:var(--font-dm-sans)]">
+      <Navigation />
+
+      <Suspense fallback={
+        <div className="pt-32 pb-16 px-5 md:px-8">
+          <div className="max-w-3xl mx-auto">
+            <div className="animate-pulse">
+              <div className="h-12 bg-gray-200 rounded w-3/4 mb-8"></div>
+              <div className="w-16 h-0.5 bg-gray-200 mb-8"></div>
+              <div className="h-6 bg-gray-200 rounded w-full mb-2"></div>
+              <div className="h-6 bg-gray-200 rounded w-2/3"></div>
+            </div>
+          </div>
+        </div>
+      }>
+        <ContactContent />
+      </Suspense>
 
       <Footer />
     </div>
