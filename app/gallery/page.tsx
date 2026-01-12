@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 
 export default function Gallery() {
   const [isMobile, setIsMobile] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -14,7 +16,7 @@ export default function Gallery() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // All photos - simple flat list
+  // All photos
   const photos = [
     "/images/image001.jpeg",
     "/images/image035.jpeg",
@@ -22,29 +24,51 @@ export default function Gallery() {
     "/images/image00005.jpeg",
   ];
 
-  // Desktop photos with captions
-  const allPhotos = [
-    {
-      image: "/images/image001.jpeg",
-      caption: "On Stage",
-      location: "Accra, Ghana",
-    },
-    {
-      image: "/images/image035.jpeg",
-      caption: "Comedy Night",
-      location: "Accra, Ghana",
-    },
-    {
-      image: "/images/image051.jpeg",
-      caption: "Backstage Moments",
-      location: "Accra, Ghana",
-    },
-    {
-      image: "/images/image00005.jpeg",
-      caption: "Fan Meet & Greet",
-      location: "Accra, Ghana",
-    },
-  ];
+  const openModal = (index: number) => {
+    setCurrentIndex(index);
+    setModalOpen(true);
+  };
+
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+  }, []);
+
+  const goToNext = useCallback(() => {
+    if (currentIndex < photos.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
+    }
+  }, [currentIndex, photos.length]);
+
+  const goToPrev = useCallback(() => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+    }
+  }, [currentIndex]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!modalOpen) return;
+      if (e.key === "Escape") closeModal();
+      if (e.key === "ArrowRight") goToNext();
+      if (e.key === "ArrowLeft") goToPrev();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [modalOpen, goToNext, goToPrev, closeModal]);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (modalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [modalOpen]);
 
   return (
     <div className="bg-white min-h-screen font-[family-name:var(--font-dm-sans)]">
@@ -66,7 +90,11 @@ export default function Gallery() {
           <section className="p-3">
             <div className="grid grid-cols-3 gap-1">
               {photos.map((photo, i) => (
-                <div key={i} className="aspect-square overflow-hidden">
+                <div
+                  key={i}
+                  className="aspect-square overflow-hidden cursor-pointer"
+                  onClick={() => openModal(i)}
+                >
                   <img
                     src={photo}
                     alt={`Gallery photo ${i + 1}`}
@@ -101,23 +129,18 @@ export default function Gallery() {
           <section className="pb-32 px-8">
             <div className="max-w-7xl mx-auto">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {allPhotos.map((photo, index) => (
+                {photos.map((photo, index) => (
                   <div
                     key={index}
-                    className="group relative aspect-square bg-[var(--color-light-gray)] overflow-hidden cursor-pointer"
+                    className="aspect-square bg-[var(--color-light-gray)] overflow-hidden cursor-pointer"
+                    onClick={() => openModal(index)}
                   >
                     <img
-                      src={photo.image}
-                      alt={photo.caption}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      src={photo}
+                      alt={`Gallery photo ${index + 1}`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <h3 className="font-[family-name:var(--font-fraunces)] font-semibold text-lg mb-1">
-                        {photo.caption}
-                      </h3>
-                      <p className="text-sm opacity-90">{photo.location}</p>
-                    </div>
                   </div>
                 ))}
               </div>
@@ -128,43 +151,122 @@ export default function Gallery() {
         </>
       )}
 
-      <style jsx global>{`
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
+      {/* Image Modal */}
+      {modalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95"
+          onClick={closeModal}
+        >
+          {/* Close button */}
+          <button
+            onClick={closeModal}
+            className="absolute top-4 right-4 z-50 w-10 h-10 flex items-center justify-center text-white/80 hover:text-white transition-colors"
+          >
+            <svg
+              className="w-8 h-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
 
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
+          {/* Image counter */}
+          <div className="absolute top-4 left-4 z-50 text-white/60 text-sm">
+            {currentIndex + 1} / {photos.length}
+          </div>
 
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+          {/* Main image */}
+          <div
+            className="relative max-w-5xl max-h-[85vh] mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={photos[currentIndex]}
+              alt={`Gallery photo ${currentIndex + 1}`}
+              className="max-w-full max-h-[85vh] object-contain"
+            />
+          </div>
 
-        .animate-fade-in {
-          animation: fadeIn 0.6s ease-out forwards;
-        }
+          {/* Navigation arrows */}
+          {currentIndex > 0 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                goToPrev();
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-white/60 hover:text-white transition-colors bg-black/30 hover:bg-black/50 rounded-full"
+            >
+              <svg
+                className="w-8 h-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+          )}
+          {currentIndex < photos.length - 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                goToNext();
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-white/60 hover:text-white transition-colors bg-black/30 hover:bg-black/50 rounded-full"
+            >
+              <svg
+                className="w-8 h-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          )}
 
-        .animate-slide-up {
-          animation: slideUp 0.5s ease-out forwards;
-        }
-      `}</style>
+          {/* Thumbnail strip */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            {photos.map((photo, i) => (
+              <button
+                key={i}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentIndex(i);
+                }}
+                className={`w-16 h-16 overflow-hidden rounded transition-all ${
+                  i === currentIndex
+                    ? "ring-2 ring-white opacity-100"
+                    : "opacity-50 hover:opacity-75"
+                }`}
+              >
+                <img
+                  src={photo}
+                  alt={`Thumbnail ${i + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
