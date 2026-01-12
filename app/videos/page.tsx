@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import LazyVideo from "../components/LazyVideo";
 import VideoModal from "../components/VideoModal";
 
 export default function Videos() {
@@ -26,20 +25,12 @@ export default function Videos() {
     setModalOpen(true);
   };
 
-  // Shorts/Clips data - vertical format (optimized local videos)
+  // Shorts/Clips data - YouTube Shorts
   const shorts = [
-    {
-      title: "FBI shorts",
-      video: "/videos/optimized/video1_v2.mp4",
-    },
-    {
-      title: "The New False",
-      video: "/videos/optimized/video2.mp4",
-    },
-    {
-      title: "Soho Comedy Night",
-      video: "/videos/optimized/video3.mp4",
-    },
+    { youtubeId: "5Kttehrq4wY" },
+    { youtubeId: "ntipniWCRUs" },
+    { youtubeId: "dpTo6kUtvEQ" },
+    { youtubeId: "ntipniWCRUs" },
   ];
 
   return (
@@ -84,15 +75,19 @@ export default function Videos() {
                   onClick={() => openVideoModal(i)}
                 >
                   <div className="relative w-28 aspect-[9/16] rounded-sm overflow-hidden bg-[var(--color-charcoal)]">
-                    <LazyVideo
-                      src={short.video}
+                    <img
+                      src={`https://img.youtube.com/vi/${short.youtubeId}/hqdefault.jpg`}
+                      alt="YouTube Short"
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                    <div className="absolute bottom-2 left-2 right-2">
-                      <p className="text-white text-xs font-medium line-clamp-1">
-                        {short.title}
-                      </p>
+                    {/* Play icon */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                        <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -214,7 +209,7 @@ export default function Videos() {
                 </a>
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-4 gap-4">
                 {shorts.map((short, i) => (
                   <div
                     key={i}
@@ -222,15 +217,19 @@ export default function Videos() {
                     onClick={() => openVideoModal(i)}
                   >
                     <div className="relative aspect-[9/16] rounded-xl overflow-hidden bg-[var(--color-charcoal)] shadow-lg group-hover:shadow-xl transition-shadow">
-                      <LazyVideo
-                        src={short.video}
+                      <img
+                        src={`https://img.youtube.com/vi/${short.youtubeId}/hqdefault.jpg`}
+                        alt="YouTube Short"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                      <div className="absolute bottom-3 left-3 right-3">
-                        <p className="text-white text-sm font-medium line-clamp-1">
-                          {short.title}
-                        </p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      {/* Play icon */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                          <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
                   </div>
