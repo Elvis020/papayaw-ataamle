@@ -9,6 +9,8 @@ export default function Gallery() {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const thumbnailRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
+  const [modalImageLoaded, setModalImageLoaded] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -42,24 +44,32 @@ export default function Gallery() {
     "/images/image00012.webp",
   ];
 
+  const handleImageLoad = (index: number) => {
+    setLoadedImages((prev) => new Set(prev).add(index));
+  };
+
   const openModal = (index: number) => {
     setCurrentIndex(index);
     setModalOpen(true);
+    setModalImageLoaded(false);
   };
 
   const closeModal = useCallback(() => {
     setModalOpen(false);
+    setModalImageLoaded(false);
   }, []);
 
   const goToNext = useCallback(() => {
     if (currentIndex < photos.length - 1) {
       setCurrentIndex((prev) => prev + 1);
+      setModalImageLoaded(false);
     }
   }, [currentIndex, photos.length]);
 
   const goToPrev = useCallback(() => {
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
+      setModalImageLoaded(false);
     }
   }, [currentIndex]);
 
@@ -121,14 +131,20 @@ export default function Gallery() {
               {photos.map((photo, i) => (
                 <div
                   key={i}
-                  className="aspect-square overflow-hidden cursor-pointer"
+                  className="aspect-square overflow-hidden cursor-pointer relative"
                   onClick={() => openModal(i)}
                 >
+                  {!loadedImages.has(i) && (
+                    <div className="absolute inset-0 shimmer" />
+                  )}
                   <img
                     src={photo}
                     alt={`Gallery photo ${i + 1}`}
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full object-cover transition-opacity duration-300 ${
+                      loadedImages.has(i) ? "opacity-100" : "opacity-0"
+                    }`}
                     loading="lazy"
+                    onLoad={() => handleImageLoad(i)}
                   />
                 </div>
               ))}
@@ -163,14 +179,20 @@ export default function Gallery() {
                 {photos.map((photo, index) => (
                   <div
                     key={index}
-                    className="aspect-square bg-[var(--color-light-gray)] overflow-hidden cursor-pointer"
+                    className="aspect-square bg-[var(--color-light-gray)] overflow-hidden cursor-pointer relative"
                     onClick={() => openModal(index)}
                   >
+                    {!loadedImages.has(index) && (
+                      <div className="absolute inset-0 shimmer" />
+                    )}
                     <img
                       src={photo}
                       alt={`Gallery photo ${index + 1}`}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      className={`w-full h-full object-cover hover:scale-105 transition-all duration-500 ${
+                        loadedImages.has(index) ? "opacity-100" : "opacity-0"
+                      }`}
                       loading="lazy"
+                      onLoad={() => handleImageLoad(index)}
                     />
                   </div>
                 ))}
@@ -220,10 +242,18 @@ export default function Gallery() {
             className="relative max-w-5xl max-h-[85vh] mx-4"
             onClick={(e) => e.stopPropagation()}
           >
+            {!modalImageLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-full max-w-3xl aspect-[4/3] shimmer-dark rounded-lg" />
+              </div>
+            )}
             <img
               src={photos[currentIndex]}
               alt={`Gallery photo ${currentIndex + 1}`}
-              className="max-w-full max-h-[85vh] object-contain"
+              className={`max-w-full max-h-[85vh] object-contain transition-opacity duration-300 ${
+                modalImageLoaded ? "opacity-100" : "opacity-0"
+              }`}
+              onLoad={() => setModalImageLoaded(true)}
             />
           </div>
 
@@ -287,17 +317,24 @@ export default function Gallery() {
                   onClick={(e) => {
                     e.stopPropagation();
                     setCurrentIndex(i);
+                    setModalImageLoaded(false);
                   }}
-                  className={`flex-shrink-0 w-16 h-16 overflow-hidden rounded transition-all ${
+                  className={`flex-shrink-0 w-16 h-16 overflow-hidden rounded transition-all relative ${
                     i === currentIndex
                       ? "ring-2 ring-white opacity-100"
                       : "opacity-50 hover:opacity-75"
                   }`}
                 >
+                  {!loadedImages.has(i) && (
+                    <div className="absolute inset-0 shimmer-dark" />
+                  )}
                   <img
                     src={photo}
                     alt={`Thumbnail ${i + 1}`}
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full object-cover transition-opacity duration-300 ${
+                      loadedImages.has(i) ? "opacity-100" : "opacity-0"
+                    }`}
+                    loading="lazy"
                   />
                 </button>
               ))}
