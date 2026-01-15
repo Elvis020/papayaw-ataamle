@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import VideoModal from "./components/VideoModal";
 import ShortPreview from "./components/ShortPreview";
 import { hasEvents } from "./data/events";
+import { stats } from "./data/stats";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -75,7 +76,7 @@ export default function Home() {
             {/* Stats Skeleton */}
             <section className="py-4 px-5 border-b border-gray-200">
               <div className="flex justify-between">
-                {[1, 2, 3].map((i) => (
+                {stats.map((_, i) => (
                   <div key={i} className="text-center space-y-2">
                     <div className="h-6 bg-gray-300 w-12 rounded mx-auto" />
                     <div className="h-3 bg-gray-200 w-16 rounded mx-auto" />
@@ -89,7 +90,10 @@ export default function Home() {
               <div className="h-4 bg-gray-300 w-24 rounded" />
               <div className="grid grid-cols-2 gap-3">
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="aspect-[9/16] bg-gray-200 rounded-lg" />
+                  <div
+                    key={i}
+                    className="aspect-[9/16] bg-gray-200 rounded-lg"
+                  />
                 ))}
               </div>
             </section>
@@ -117,7 +121,7 @@ export default function Home() {
                     className="text-xs uppercase tracking-[0.2em] text-[var(--color-accent)] mb-2 font-medium animate-slide-up drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
                     style={{ animationDelay: "0.1s" }}
                   >
-                    Stand-Up Comedian
+                    Award-Winning Comedian
                   </p>
                   <h1
                     className="text-4xl font-[family-name:var(--font-fraunces)] font-bold text-white leading-tight mb-3 animate-slide-up"
@@ -139,24 +143,16 @@ export default function Home() {
                     className="flex justify-between py-4 border-t border-white/20 animate-fade-in"
                     style={{ animationDelay: "0.5s" }}
                   >
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-white">10M+</div>
-                      <div className="text-[10px] uppercase text-gray-400">
-                        Followers
+                    {stats.map((stat, index) => (
+                      <div key={index} className="text-center">
+                        <div className="text-lg font-bold text-white">
+                          {stat.number}
+                        </div>
+                        <div className="text-[10px] uppercase text-gray-400">
+                          {stat.label}
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-white">500+</div>
-                      <div className="text-[10px] uppercase text-gray-400">
-                        Shows
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-white">100M+</div>
-                      <div className="text-[10px] uppercase text-gray-400">
-                        Views
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -179,10 +175,7 @@ export default function Home() {
               {/* Horizontal Scroll Container */}
               <div className="flex gap-3 overflow-x-auto pl-5 pr-5 pb-2 snap-x snap-mandatory scroll-pl-5 scrollbar-hide">
                 {shorts.map((short, i) => (
-                  <div
-                    key={i}
-                    className="flex-shrink-0 snap-start"
-                  >
+                  <div key={i} className="flex-shrink-0 snap-start">
                     <ShortPreview
                       youtubeId={short.youtubeId}
                       onClick={() => openVideoModal(i)}
@@ -392,7 +385,7 @@ export default function Home() {
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-32 bg-[var(--color-accent)]" />
 
                   <p className="text-sm uppercase tracking-[0.3em] text-[var(--color-accent)] mb-6 font-medium">
-                    Stand-Up Comedian
+                    Award-Winning Comedian
                   </p>
                   <h1 className="text-[clamp(3rem,8vw,8rem)] font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] leading-[0.9] mb-8">
                     Papa Yaw
@@ -458,24 +451,16 @@ export default function Home() {
                   </div>
 
                   <div className="flex justify-between mt-16 pt-8 border-t border-gray-200 max-w-md">
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-[var(--color-charcoal)]">10M+</div>
-                      <div className="text-[10px] uppercase text-[var(--color-gray)]">
-                        Followers
+                    {stats.map((stat, index) => (
+                      <div key={index} className="text-center">
+                        <div className="text-lg font-bold text-[var(--color-charcoal)]">
+                          {stat.number}
+                        </div>
+                        <div className="text-[10px] uppercase text-[var(--color-gray)]">
+                          {stat.label}
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-[var(--color-charcoal)]">500+</div>
-                      <div className="text-[10px] uppercase text-[var(--color-gray)]">
-                        Shows
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-[var(--color-charcoal)]">100M+</div>
-                      <div className="text-[10px] uppercase text-[var(--color-gray)]">
-                        Views
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
 
@@ -577,10 +562,7 @@ export default function Home() {
                   {/* Shorts Grid - Vertical Format */}
                   <div className="grid grid-cols-4 gap-6">
                     {shorts.map((short, i) => (
-                      <div
-                        key={i}
-                        className="group"
-                      >
+                      <div key={i} className="group">
                         <ShortPreview
                           youtubeId={short.youtubeId}
                           onClick={() => openVideoModal(i)}

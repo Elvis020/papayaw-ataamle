@@ -5,6 +5,7 @@ import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import ScrollReveal from "../components/ScrollReveal";
 import ScrollToTop from "../components/ScrollToTop";
+import { stats } from "../data/stats";
 
 export default function About() {
   const [isMobile, setIsMobile] = useState(true);
@@ -17,14 +18,6 @@ export default function About() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  // Stats data
-  const stats = [
-    { number: "5+", label: "Years" },
-    { number: "50+", label: "Shows" },
-    { number: "100+", label: "Followers" },
-    { number: "5+", label: "Partners" },
-  ];
 
   // Achievement types
   type AchievementWithItems = {
