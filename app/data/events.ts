@@ -23,7 +23,7 @@ export const upcomingShows: Show[] = [
     venue: "2927 Comedy Club",
     city: "Accra",
     recurring: {
-      schedule: "Every Friday",
+      schedule: "Every Thursday",
       time: "8:00 PM",
     },
     flyer: "/images/shows/ComedyClub.jpeg",
