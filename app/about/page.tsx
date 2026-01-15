@@ -42,11 +42,7 @@ export default function About() {
   const television: AchievementWithItems = {
     id: "television",
     title: "Television",
-    items: [
-      "Half Serious Show (GHOne tv)",
-      "The hahaha show (Tarkwa)",
-      "WMT Show 3fm - Radio",
-    ],
+    items: ["Half Serious Show (GHOne tv)", "WMT Show 3fm - Radio"],
   };
 
   const venues: AchievementWithItems = {
@@ -56,6 +52,7 @@ export default function About() {
       "2927 comedy club (Accra)",
       "Comedy Express (Accra)",
       "Comedy Bar (Accra)",
+      "The hahaha show (Tarkwa)",
       "Kumasi Comedy Show (Kumasi)",
       "Lemon Stand Comedy Club (Singapore)",
       "East Coast Comedy Club (Singapore)",
@@ -70,7 +67,7 @@ export default function About() {
     sections: [
       {
         subtitle: "Digital",
-        items: ["100+ social followers"],
+        items: ["100K+ social followers"],
       },
       {
         subtitle: "Brands",
@@ -81,7 +78,11 @@ export default function About() {
 
   // Different ordering for mobile vs desktop
   const achievementsMobile: Achievement[] = [television, digitalBrands, venues];
-  const achievementsDesktop: Achievement[] = [television, venues, digitalBrands];
+  const achievementsDesktop: Achievement[] = [
+    television,
+    venues,
+    digitalBrands,
+  ];
 
   return (
     <div className="bg-white min-h-screen flex flex-col font-[family-name:var(--font-dm-sans)]">
@@ -144,7 +145,9 @@ export default function About() {
               {/* Content container */}
               <div
                 className={`overflow-hidden transition-all ${
-                  bioExpanded ? "max-h-[1000px] duration-500 ease-out" : "max-h-[280px] duration-200 ease-in"
+                  bioExpanded
+                    ? "max-h-[1000px] duration-500 ease-out"
+                    : "max-h-[280px] duration-200 ease-in"
                 }`}
               >
                 {/* The Journey */}
@@ -153,10 +156,10 @@ export default function About() {
                     The Journey
                   </h2>
                   <p className="text-sm text-[var(--color-charcoal)] leading-relaxed mb-3">
-                    Papa Yaw Ataamle is a multi-award-winning stand-up
-                    comedian, comic influencer, and brand communicator known
-                    for transforming everyday realities into intelligent,
-                    relatable humor that connects audiences across cultures.
+                    Papa Yaw Ataamle is a multi-award-winning stand-up comedian,
+                    comic influencer, and brand communicator known for
+                    transforming everyday realities into intelligent, relatable
+                    humor that connects audiences across cultures.
                   </p>
                   <p className="text-sm text-[var(--color-charcoal)] leading-relaxed mb-3">
                     In 2025, he was named Comic Influencer of the Year at the
@@ -166,11 +169,10 @@ export default function About() {
                     stage in Ghana.
                   </p>
                   <p className="text-sm text-[var(--color-charcoal)] leading-relaxed">
-                    His work has expanded beyond borders with the launch of
-                    his international comedy world tour, which has already
-                    recorded successful performances in Singapore and Togo,
-                    marking a new chapter in taking Ghanaian comedy to global
-                    audiences.
+                    His work has expanded beyond borders with the launch of his
+                    international comedy world tour, which has already recorded
+                    successful performances in Singapore and Togo, marking a new
+                    chapter in taking Ghanaian comedy to global audiences.
                   </p>
                 </div>
 
@@ -182,18 +184,17 @@ export default function About() {
                   <p className="text-sm text-[var(--color-charcoal)] leading-relaxed mb-3">
                     Beyond the stage, Papa Yaw Ataamle works with brands as a
                     trusted ambassador and strategic marketing partner. He
-                    currently represents Kantanka Immulate Herbal Supplement,
-                    KS Electricals, Benjamin Cargo Logistics, and Tealeys.
-                    Through his digital marketing company, he helps brands
-                    communicate effectively using humor, storytelling, and
-                    insight that deliver measurable results.
+                    currently represents Kantanka Immulate Herbal Supplement, KS
+                    Electricals, Benjamin Cargo Logistics, and Tealeys. Through
+                    his digital marketing company, he helps brands communicate
+                    effectively using humor, storytelling, and insight that
+                    deliver measurable results.
                   </p>
                   <p className="text-sm text-[var(--color-charcoal)] leading-relaxed mb-3">
-                    He has been featured on major media platforms including
-                    TV3 Showbiz 360, GH One TV, Joy Prime, Adom TV, UTV,
-                    Kantanka TV, and 3FM, and has appeared in national
-                    advertising campaigns, including an Eazzy Paint TV
-                    commercial.
+                    He has been featured on major media platforms including TV3
+                    Showbiz 360, GH One TV, Joy Prime, Adom TV, UTV, Kantanka
+                    TV, and 3FM, and has appeared in national advertising
+                    campaigns, including an Eazzy Paint TV commercial.
                   </p>
                   <p className="text-sm text-[var(--color-charcoal)] leading-relaxed">
                     At the heart of his work is impact—making people laugh,
@@ -251,7 +252,7 @@ export default function About() {
                   </h3>
 
                   {/* Handle regular items or sections with subtitles */}
-                  {'items' in section ? (
+                  {"items" in section ? (
                     <ul className="space-y-1">
                       {section.items.map((item, i) => (
                         <li
@@ -446,7 +447,7 @@ export default function About() {
                       </h3>
 
                       {/* Handle regular items or sections with subtitles */}
-                      {'items' in section ? (
+                      {"items" in section ? (
                         <ul
                           className={`space-y-2 ${section.id === "venues" ? "columns-2 gap-x-6" : ""}`}
                         >

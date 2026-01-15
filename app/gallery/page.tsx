@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 
@@ -8,6 +8,7 @@ export default function Gallery() {
   const [isMobile, setIsMobile] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const thumbnailRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -19,9 +20,26 @@ export default function Gallery() {
   // All photos
   const photos = [
     "/images/image001.webp",
+    "/images/image002.webp",
+    "/images/image003.webp",
+    "/images/image004.webp",
+    "/images/image005.webp",
+    "/images/image006.webp",
+    "/images/image007.webp",
     "/images/image035.webp",
     "/images/image051.webp",
+    "/images/image00001.webp",
+    "/images/image00002.webp",
+    "/images/image00003.webp",
+    "/images/image00004.webp",
     "/images/image00005.webp",
+    "/images/image00006.webp",
+    "/images/image00007.webp",
+    "/images/image00008.webp",
+    "/images/image00009.webp",
+    "/images/image00010.webp",
+    "/images/image00011.webp",
+    "/images/image00012.webp",
   ];
 
   const openModal = (index: number) => {
@@ -69,6 +87,17 @@ export default function Gallery() {
       document.body.style.overflow = "";
     };
   }, [modalOpen]);
+
+  // Auto-scroll current thumbnail into view
+  useEffect(() => {
+    if (modalOpen && thumbnailRefs.current[currentIndex]) {
+      thumbnailRefs.current[currentIndex]?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+  }, [currentIndex, modalOpen]);
 
   return (
     <div className="bg-white min-h-screen flex flex-col font-[family-name:var(--font-dm-sans)]">
@@ -247,27 +276,32 @@ export default function Gallery() {
           )}
 
           {/* Thumbnail strip */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-            {photos.map((photo, i) => (
-              <button
-                key={i}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setCurrentIndex(i);
-                }}
-                className={`w-16 h-16 overflow-hidden rounded transition-all ${
-                  i === currentIndex
-                    ? "ring-2 ring-white opacity-100"
-                    : "opacity-50 hover:opacity-75"
-                }`}
-              >
-                <img
-                  src={photo}
-                  alt={`Thumbnail ${i + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </button>
-            ))}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[90vw] max-w-4xl">
+            <div className="flex gap-2 overflow-x-auto pb-2 px-2 scroll-smooth scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent hover:scrollbar-thumb-white/50">
+              {photos.map((photo, i) => (
+                <button
+                  key={i}
+                  ref={(el) => {
+                    thumbnailRefs.current[i] = el;
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentIndex(i);
+                  }}
+                  className={`flex-shrink-0 w-16 h-16 overflow-hidden rounded transition-all ${
+                    i === currentIndex
+                      ? "ring-2 ring-white opacity-100"
+                      : "opacity-50 hover:opacity-75"
+                  }`}
+                >
+                  <img
+                    src={photo}
+                    alt={`Thumbnail ${i + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}
