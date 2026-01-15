@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import ScrollReveal from "../components/ScrollReveal";
@@ -32,29 +33,143 @@ export default function Shows() {
       <section className="pb-32 px-8">
         <div className="max-w-5xl mx-auto">
           {hasEvents ? (
-            <div className="space-y-1">
+            <div className="space-y-8">
               {shows.map((show, index) => (
                 <ScrollReveal key={index} delay={index * 0.05}>
-                  <div className="group border-b border-gray-200 py-8 hover:bg-gray-50 transition-colors cursor-pointer">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                      <div className="flex items-baseline gap-8">
-                        <div className="text-sm text-[var(--color-gray)] font-mono min-w-[80px]">
-                          {show.date}
-                          <span className="ml-2 text-xs">{show.year}</span>
+                  <div className="group border border-gray-200 rounded-lg overflow-hidden hover:border-[var(--color-accent)] transition-colors">
+                    <div className="flex flex-col md:flex-row gap-6">
+                      {/* Flyer Image */}
+                      {show.flyer && (
+                        <div className="md:w-64 h-64 md:h-auto relative bg-gray-100 shrink-0">
+                          <Image
+                            src={show.flyer}
+                            alt={`${show.venue} flyer`}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 256px"
+                          />
                         </div>
-                        <div>
-                          <h3 className="text-xl font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] mb-1">
+                      )}
+
+                      {/* Event Details */}
+                      <div className="flex-1 p-6 md:py-8">
+                        <div className="flex flex-col h-full">
+                          {/* Recurring Badge */}
+                          {show.recurring && (
+                            <div className="mb-3">
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[var(--color-accent)]/10 text-[var(--color-accent)] text-xs font-semibold uppercase tracking-wider rounded-full">
+                                <svg
+                                  className="w-3.5 h-3.5"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                  />
+                                </svg>
+                                Recurring Event
+                              </span>
+                            </div>
+                          )}
+
+                          <h3 className="text-2xl md:text-3xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-2">
                             {show.venue}
                           </h3>
-                          <p className="text-[var(--color-gray)]">{show.city}</p>
+                          <p className="text-lg text-[var(--color-gray)] mb-4">
+                            {show.city}
+                          </p>
+
+                          {/* Schedule Info */}
+                          <div className="space-y-2 mb-6">
+                            {show.recurring ? (
+                              <>
+                                <div className="flex items-center gap-2 text-[var(--color-charcoal)]">
+                                  <svg
+                                    className="w-5 h-5 text-[var(--color-accent)]"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                    />
+                                  </svg>
+                                  <span className="font-medium">
+                                    {show.recurring.schedule}
+                                  </span>
+                                </div>
+                                {show.recurring.time && (
+                                  <div className="flex items-center gap-2 text-[var(--color-gray)]">
+                                    <svg
+                                      className="w-5 h-5 text-[var(--color-accent)]"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                    <span>{show.recurring.time}</span>
+                                  </div>
+                                )}
+                              </>
+                            ) : (
+                              <div className="flex items-center gap-2 text-[var(--color-charcoal)]">
+                                <svg
+                                  className="w-5 h-5 text-[var(--color-accent)]"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                  />
+                                </svg>
+                                <span className="font-medium">
+                                  {show.date} {show.year}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* CTA Button */}
+                          <div className="mt-auto">
+                            <a
+                              href={show.ticketLink || "#"}
+                              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-accent)] text-white font-medium uppercase tracking-wider text-sm hover:bg-[#a33d1e] transition-colors"
+                            >
+                              {show.recurring ? "More Info" : "Get Tickets"}
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M9 5l7 7-7 7"
+                                />
+                              </svg>
+                            </a>
+                          </div>
                         </div>
                       </div>
-                      <a
-                        href="#"
-                        className="text-sm text-[var(--color-accent)] hover:text-[#a33d1e] transition-colors font-medium group-hover:translate-x-1 inline-block transition-transform"
-                      >
-                        Get Tickets →
-                      </a>
                     </div>
                   </div>
                 </ScrollReveal>

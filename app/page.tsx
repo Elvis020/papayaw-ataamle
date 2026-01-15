@@ -7,7 +7,7 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import VideoModal from "./components/VideoModal";
 import ShortPreview from "./components/ShortPreview";
-import { hasEvents } from "./data/events";
+import { hasEvents, upcomingShows } from "./data/events";
 import { stats } from "./data/stats";
 
 export default function Home() {
@@ -197,34 +197,125 @@ export default function Home() {
                     href="/shows"
                     className="text-xs uppercase tracking-wider text-[var(--color-accent)]"
                   >
-                    All Dates
+                    View All
                   </Link>
                 )}
               </div>
 
-              <div className="bg-[var(--color-light-gray)] rounded-xl p-6 text-center">
-                <div className="w-12 h-12 rounded-full bg-[var(--color-charcoal)]/10 flex items-center justify-center mx-auto mb-3">
-                  <svg
-                    className="w-6 h-6 text-[var(--color-gray)]"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
+              {hasEvents ? (
+                <Link
+                  href="/shows"
+                  className="block bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-[var(--color-accent)] transition-colors"
+                >
+                  {upcomingShows[0].flyer && (
+                    <div className="relative h-48 bg-gray-100">
+                      <Image
+                        src={upcomingShows[0].flyer}
+                        alt={`${upcomingShows[0].venue} flyer`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 400px"
+                      />
+                      {upcomingShows[0].recurring && (
+                        <div className="absolute top-3 right-3">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[var(--color-accent)] text-white text-xs font-semibold uppercase tracking-wider rounded-full shadow-lg">
+                            <svg
+                              className="w-3 h-3"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                              />
+                            </svg>
+                            Recurring
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <h3 className="text-lg font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-1">
+                      {upcomingShows[0].venue}
+                    </h3>
+                    <p className="text-sm text-[var(--color-gray)] mb-3">
+                      {upcomingShows[0].city}
+                    </p>
+                    {upcomingShows[0].recurring ? (
+                      <div className="space-y-1.5">
+                        <div className="flex items-center gap-2 text-sm text-[var(--color-charcoal)]">
+                          <svg
+                            className="w-4 h-4 text-[var(--color-accent)]"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                          </svg>
+                          <span className="font-medium">
+                            {upcomingShows[0].recurring.schedule}
+                          </span>
+                        </div>
+                        {upcomingShows[0].recurring.time && (
+                          <div className="flex items-center gap-2 text-sm text-[var(--color-gray)]">
+                            <svg
+                              className="w-4 h-4 text-[var(--color-accent)]"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                            <span>{upcomingShows[0].recurring.time}</span>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-[var(--color-charcoal)] font-medium">
+                        {upcomingShows[0].date} {upcomingShows[0].year}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              ) : (
+                <div className="bg-[var(--color-light-gray)] rounded-xl p-6 text-center">
+                  <div className="w-12 h-12 rounded-full bg-[var(--color-charcoal)]/10 flex items-center justify-center mx-auto mb-3">
+                    <svg
+                      className="w-6 h-6 text-[var(--color-gray)]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-[var(--color-gray)] mb-1">
+                    No upcoming shows
+                  </p>
+                  <p className="text-xs text-[var(--color-gray)]/70">
+                    Check back soon for new dates!
+                  </p>
                 </div>
-                <p className="text-sm text-[var(--color-gray)] mb-1">
-                  No upcoming shows
-                </p>
-                <p className="text-xs text-[var(--color-gray)]/70">
-                  Check back soon for new dates!
-                </p>
-              </div>
+              )}
             </section>
 
             {/* Gallery - Horizontal Scroll */}
@@ -611,29 +702,147 @@ export default function Home() {
                     )}
                   </div>
 
-                  <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
-                    <div className="w-16 h-16 rounded-full bg-[var(--color-charcoal)]/10 flex items-center justify-center mx-auto mb-4">
-                      <svg
-                        className="w-8 h-8 text-[var(--color-gray)]"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
+                  {hasEvents ? (
+                    <Link
+                      href="/shows"
+                      className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-[var(--color-accent)] transition-colors"
+                    >
+                      <div className="grid md:grid-cols-2 gap-8">
+                        {/* Flyer */}
+                        {upcomingShows[0].flyer && (
+                          <div className="relative h-96 bg-gray-100">
+                            <Image
+                              src={upcomingShows[0].flyer}
+                              alt={`${upcomingShows[0].venue} flyer`}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                            />
+                            {upcomingShows[0].recurring && (
+                              <div className="absolute top-4 right-4">
+                                <span className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-accent)] text-white text-sm font-semibold uppercase tracking-wider rounded-full shadow-lg">
+                                  <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                    />
+                                  </svg>
+                                  Recurring Event
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Details */}
+                        <div className="p-8 flex flex-col justify-center">
+                          <h3 className="text-3xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-3">
+                            {upcomingShows[0].venue}
+                          </h3>
+                          <p className="text-xl text-[var(--color-gray)] mb-6">
+                            {upcomingShows[0].city}
+                          </p>
+
+                          {upcomingShows[0].recurring ? (
+                            <div className="space-y-3 mb-8">
+                              <div className="flex items-center gap-3 text-lg text-[var(--color-charcoal)]">
+                                <svg
+                                  className="w-6 h-6 text-[var(--color-accent)]"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                  />
+                                </svg>
+                                <span className="font-semibold">
+                                  {upcomingShows[0].recurring.schedule}
+                                </span>
+                              </div>
+                              {upcomingShows[0].recurring.time && (
+                                <div className="flex items-center gap-3 text-lg text-[var(--color-gray)]">
+                                  <svg
+                                    className="w-6 h-6 text-[var(--color-accent)]"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                  </svg>
+                                  <span>{upcomingShows[0].recurring.time}</span>
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <p className="text-lg text-[var(--color-charcoal)] font-semibold mb-8">
+                              {upcomingShows[0].date} {upcomingShows[0].year}
+                            </p>
+                          )}
+
+                          <div className="inline-flex items-center gap-2 text-[var(--color-accent)] font-medium">
+                            <span>
+                              {upcomingShows[0].recurring
+                                ? "Learn More"
+                                : "Get Tickets"}
+                            </span>
+                            <svg
+                              className="w-5 h-5"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ) : (
+                    <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
+                      <div className="w-16 h-16 rounded-full bg-[var(--color-charcoal)]/10 flex items-center justify-center mx-auto mb-4">
+                        <svg
+                          className="w-8 h-8 text-[var(--color-gray)]"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                          />
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] mb-2">
+                        No upcoming shows
+                      </h3>
+                      <p className="text-[var(--color-gray)]">
+                        Check back soon for new dates and locations!
+                      </p>
                     </div>
-                    <h3 className="text-xl font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] mb-2">
-                      No upcoming shows
-                    </h3>
-                    <p className="text-[var(--color-gray)]">
-                      Check back soon for new dates and locations!
-                    </p>
-                  </div>
+                  )}
                 </div>
               </section>
 
