@@ -9,6 +9,7 @@ import ScrollToTop from "../components/ScrollToTop";
 export default function About() {
   const [isMobile, setIsMobile] = useState(true);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
+  const [bioExpanded, setBioExpanded] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -25,42 +26,50 @@ export default function About() {
     { number: "5+", label: "Partners" },
   ];
 
-  // Achievements data - Venues is 3rd for symmetrical grid layout
-  const achievements = [
-    {
-      id: "television",
-      title: "Television",
-      items: [
-        "Half Serious Show (GHOne tv)",
-        "The hahaha show (Tarkwa)",
-        "WMT Show 3fm - Radio",
-      ],
-    },
-    {
-      id: "digital",
-      title: "Digital",
-      items: ["100+ social followers"],
-    },
-    {
-      id: "venues",
-      title: "Venues",
-      items: [
-        "2927 comedy club (Accra)",
-        "Comedy Express (Accra)",
-        "Comedy Bar (Accra)",
-        "Kumasi Comedy Show (Kumasi)",
-        "Lemon Stand Comedy Club (Singapore)",
-        "East Coast Comedy Club (Singapore)",
-        "Jinx Comedy (Singapore)",
-        "Jokeground (Togo)",
-      ],
-    },
-    {
-      id: "brands",
-      title: "Brands",
-      items: ["Nike Partnership", "Netflix Specials", "15+ collaborations"],
-    },
-  ];
+  // Base achievements data
+  const television = {
+    id: "television",
+    title: "Television",
+    items: [
+      "Half Serious Show (GHOne tv)",
+      "The hahaha show (Tarkwa)",
+      "WMT Show 3fm - Radio",
+    ],
+  };
+
+  const venues = {
+    id: "venues",
+    title: "Venues",
+    items: [
+      "2927 comedy club (Accra)",
+      "Comedy Express (Accra)",
+      "Comedy Bar (Accra)",
+      "Kumasi Comedy Show (Kumasi)",
+      "Lemon Stand Comedy Club (Singapore)",
+      "East Coast Comedy Club (Singapore)",
+      "Jinx Comedy (Singapore)",
+      "Jokeground (Togo)",
+    ],
+  };
+
+  const digitalBrands = {
+    id: "digital-brands",
+    title: "Digital & Brands",
+    sections: [
+      {
+        subtitle: "Digital",
+        items: ["100+ social followers"],
+      },
+      {
+        subtitle: "Brands",
+        items: ["5+ collaborations"],
+      },
+    ],
+  };
+
+  // Different ordering for mobile vs desktop
+  const achievementsMobile = [television, digitalBrands, venues];
+  const achievementsDesktop = [television, venues, digitalBrands];
 
   return (
     <div className="bg-white min-h-screen flex flex-col font-[family-name:var(--font-dm-sans)]">
@@ -115,20 +124,99 @@ export default function About() {
             </div>
           </section>
 
-          {/* Bio Summary */}
-          <section
-            className="px-5 py-6 animate-fade-in"
-            style={{ animationDelay: "0.4s" }}
-          >
-            <p className="text-sm text-[var(--color-charcoal)] leading-relaxed mb-4">
-              Stand-up comedian with over a decade of experience, blending sharp
-              observational humor with personal storytelling. Featured at Comedy
-              Cellar NYC, Just for Laughs, and major late-night shows.
-            </p>
-            <p className="text-sm text-[var(--color-gray)] leading-relaxed">
-              Digital creator connecting with millions through social media,
-              podcasts, and viral video content.
-            </p>
+          {/* Bio - Expandable on Mobile */}
+          <section className="px-5 py-6">
+            <div className="relative">
+              {/* Content container */}
+              <div
+                className={`overflow-hidden transition-all ${
+                  bioExpanded ? "max-h-[1000px] duration-500 ease-out" : "max-h-[280px] duration-200 ease-in"
+                }`}
+              >
+                {/* The Journey */}
+                <div className="mb-6">
+                  <h2 className="text-xs uppercase tracking-widest text-[var(--color-gray)] mb-3">
+                    The Journey
+                  </h2>
+                  <p className="text-sm text-[var(--color-charcoal)] leading-relaxed mb-3">
+                    Papa Yaw Ataamle is a multi-award-winning stand-up
+                    comedian, comic influencer, and brand communicator known
+                    for transforming everyday realities into intelligent,
+                    relatable humor that connects audiences across cultures.
+                  </p>
+                  <p className="text-sm text-[var(--color-charcoal)] leading-relaxed mb-3">
+                    In 2025, he was named Comic Influencer of the Year at the
+                    Ghana Comedy Awards, a recognition that reflects years of
+                    consistency, growth, and impact. He has headlined four
+                    comedy specials and performed on nearly every major comedy
+                    stage in Ghana.
+                  </p>
+                  <p className="text-sm text-[var(--color-charcoal)] leading-relaxed">
+                    His work has expanded beyond borders with the launch of
+                    his international comedy world tour, which has already
+                    recorded successful performances in Singapore and Togo,
+                    marking a new chapter in taking Ghanaian comedy to global
+                    audiences.
+                  </p>
+                </div>
+
+                {/* The Work */}
+                <div>
+                  <h2 className="text-xs uppercase tracking-widest text-[var(--color-gray)] mb-3">
+                    The Work
+                  </h2>
+                  <p className="text-sm text-[var(--color-charcoal)] leading-relaxed mb-3">
+                    Beyond the stage, Papa Yaw Ataamle works with brands as a
+                    trusted ambassador and strategic marketing partner. He
+                    currently represents Kantanka Immulate Herbal Supplement,
+                    KS Electricals, Benjamin Cargo Logistics, and Tealeys.
+                    Through his digital marketing company, he helps brands
+                    communicate effectively using humor, storytelling, and
+                    insight that deliver measurable results.
+                  </p>
+                  <p className="text-sm text-[var(--color-charcoal)] leading-relaxed mb-3">
+                    He has been featured on major media platforms including
+                    TV3 Showbiz 360, GH One TV, Joy Prime, Adom TV, UTV,
+                    Kantanka TV, and 3FM, and has appeared in national
+                    advertising campaigns, including an Eazzy Paint TV
+                    commercial.
+                  </p>
+                  <p className="text-sm text-[var(--color-charcoal)] leading-relaxed">
+                    At the heart of his work is impact—making people laugh,
+                    helping brands grow, and representing African comedy with
+                    excellence on both local and international stages.
+                  </p>
+                </div>
+              </div>
+
+              {/* Gradient overlay when collapsed */}
+              {!bioExpanded && (
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none" />
+              )}
+            </div>
+
+            {/* Show More/Less Button */}
+            <button
+              onClick={() => setBioExpanded(!bioExpanded)}
+              className="mt-4 w-full py-3 text-sm uppercase tracking-wider text-[var(--color-accent)] font-medium flex items-center justify-center gap-2 hover:text-[var(--color-charcoal)] transition-colors"
+            >
+              {bioExpanded ? "Show Less" : "Show More"}
+              <svg
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  bioExpanded ? "rotate-180" : ""
+                }`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
           </section>
 
           {/* Achievements Grid */}
@@ -137,7 +225,7 @@ export default function About() {
               Highlights
             </h2>
             <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-              {achievements.map((section) => (
+              {achievementsMobile.map((section) => (
                 <div
                   key={section.id}
                   className={`border border-gray-200 rounded-lg p-4 ${
@@ -147,17 +235,42 @@ export default function About() {
                   <h3 className="font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] mb-2">
                     {section.title}
                   </h3>
-                  <ul className="space-y-1">
-                    {section.items.map((item, i) => (
-                      <li
-                        key={i}
-                        className="text-xs text-[var(--color-gray)] flex items-start gap-2"
-                      >
-                        <span className="w-1 h-1 bg-[var(--color-accent)] rounded-full mt-1.5 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+
+                  {/* Handle regular items or sections with subtitles */}
+                  {section.items ? (
+                    <ul className="space-y-1">
+                      {section.items.map((item, i) => (
+                        <li
+                          key={i}
+                          className="text-xs text-[var(--color-gray)] flex items-start gap-2"
+                        >
+                          <span className="w-1 h-1 bg-[var(--color-accent)] rounded-full mt-1.5 shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className="space-y-3">
+                      {section.sections.map((subsection, idx) => (
+                        <div key={idx}>
+                          <h4 className="text-xs font-semibold text-[var(--color-charcoal)] mb-1">
+                            {subsection.subtitle}
+                          </h4>
+                          <ul className="space-y-1">
+                            {subsection.items.map((item, i) => (
+                              <li
+                                key={i}
+                                className="text-xs text-[var(--color-gray)] flex items-start gap-2"
+                              >
+                                <span className="w-1 h-1 bg-[var(--color-accent)] rounded-full mt-1.5 shrink-0" />
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -303,8 +416,8 @@ export default function About() {
                 </h2>
               </ScrollReveal>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
-                {achievements.map((section, index) => (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+                {achievementsDesktop.map((section, index) => (
                   <ScrollReveal
                     key={index}
                     delay={index * 0.1}
@@ -314,16 +427,42 @@ export default function About() {
                       <h3 className="text-xl font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] mb-4">
                         {section.title}
                       </h3>
-                      <ul className={`space-y-2 ${section.id === "venues" ? "columns-2 gap-x-6" : ""}`}>
-                        {section.items.map((item, i) => (
-                          <li
-                            key={i}
-                            className={`text-[var(--color-gray)] group-hover:text-[var(--color-charcoal)] transition-colors ${section.id === "venues" ? "break-inside-avoid" : ""}`}
-                          >
-                            • {item}
-                          </li>
-                        ))}
-                      </ul>
+
+                      {/* Handle regular items or sections with subtitles */}
+                      {section.items ? (
+                        <ul
+                          className={`space-y-2 ${section.id === "venues" ? "columns-2 gap-x-6" : ""}`}
+                        >
+                          {section.items.map((item, i) => (
+                            <li
+                              key={i}
+                              className={`text-[var(--color-gray)] group-hover:text-[var(--color-charcoal)] transition-colors ${section.id === "venues" ? "break-inside-avoid" : ""}`}
+                            >
+                              • {item}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <div className="space-y-4">
+                          {section.sections.map((subsection, idx) => (
+                            <div key={idx}>
+                              <h4 className="text-sm font-semibold text-[var(--color-charcoal)] mb-2">
+                                {subsection.subtitle}
+                              </h4>
+                              <ul className="space-y-2">
+                                {subsection.items.map((item, i) => (
+                                  <li
+                                    key={i}
+                                    className="text-[var(--color-gray)] group-hover:text-[var(--color-charcoal)] transition-colors"
+                                  >
+                                    • {item}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </ScrollReveal>
                 ))}
