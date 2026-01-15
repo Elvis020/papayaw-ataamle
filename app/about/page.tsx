@@ -93,7 +93,7 @@ export default function About() {
           <section className="relative bg-[var(--color-charcoal)]">
             <div className="relative h-[55vh] overflow-hidden">
               <img
-                src="/images/image00005.jpeg"
+                src="/images/image00005.webp"
                 alt="Papa Yaw Ataamle"
                 className="w-full h-full object-cover object-[50%_0%] animate-fade-in"
                 loading="eager"
@@ -318,7 +318,7 @@ export default function About() {
                     <div className="relative lg:absolute lg:-top-20 lg:right-0 w-full lg:w-[400px]">
                       <div className="aspect-[3/4] bg-[var(--color-light-gray)] rounded-sm overflow-hidden relative">
                         <img
-                          src="/images/image00005.jpeg"
+                          src="/images/image00005.webp"
                           alt="Papa Yaw Ataamle"
                           className="w-full h-full object-cover"
                         />

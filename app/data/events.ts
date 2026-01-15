@@ -30,7 +30,7 @@ export const upcomingShows: Show[] = [
       schedule: "Every Thursday",
       time: "7:30 PM",
     },
-    flyer: "/images/shows/ComedyClub.jpeg",
+    flyer: "/images/shows/ComedyClub.webp",
     ticketLink: "#", // Replace with actual ticket link
   },
 ];

@@ -13,7 +13,7 @@ export default function Brands() {
       url: "http://kselectricalsgh.com/",
       description:
         "Located in the vibrant heart of Accra, Ghana, our company offers unparalleled lighting solutions for residential, commercial, and corporate clients.",
-      image: "/images/brands/image00003.jpeg",
+      image: "/images/brands/image00003.webp",
       role: "Creative Collaborator",
       imagePosition: "center 40%",
     },
@@ -22,7 +22,7 @@ export default function Brands() {
       url: "https://www.kantankafarms.com/product-page/immulate-herbal-supplement",
       description:
         "Immulate Herbal Supplement is the maiden product from KANTANKA HERBAL PHARMACEUTICALS AND RESEARCH CENTRE (KHPRC).",
-      image: "/images/brands/image00004.jpeg",
+      image: "/images/brands/image00004.webp",
       role: "Campaign Ambassador",
       imagePosition: "center 20%",
     },
@@ -31,7 +31,7 @@ export default function Brands() {
       url: "https://www.benjamincargo.com/",
       description:
         "Benjamin Cargo Logistics is a trusted logistics company in Ghana specializing in sea freight, air freight, warehousing, and container shipping.",
-      image: "/images/brands/image00002.jpeg",
+      image: "/images/brands/image00002.webp",
       role: "Brand Ambassador",
       imagePosition: "center 20%",
     },

@@ -18,10 +18,10 @@ export default function Gallery() {
 
   // All photos
   const photos = [
-    "/images/image001.jpeg",
-    "/images/image035.jpeg",
-    "/images/image051.jpeg",
-    "/images/image00005.jpeg",
+    "/images/image001.webp",
+    "/images/image035.webp",
+    "/images/image051.webp",
+    "/images/image00005.webp",
   ];
 
   const openModal = (index: number) => {

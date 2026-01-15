@@ -107,7 +107,7 @@ export default function Home() {
               {/* Hero Image with Dark Overlay */}
               <div className="relative h-[60vh] overflow-hidden">
                 <Image
-                  src="/images/profile/image00012.jpeg"
+                  src="/images/profile/image00012.webp"
                   alt="Papa Yaw Ataamle"
                   fill
                   className="object-cover object-[center_30%] animate-fade-in"
@@ -372,9 +372,9 @@ export default function Home() {
 
               <div className="flex gap-3 overflow-x-auto pl-5 pr-5 pb-2 snap-x snap-mandatory scroll-pl-5 scrollbar-hide">
                 {[
-                  "/images/image001.jpeg",
-                  "/images/image035.jpeg",
-                  "/images/image051.jpeg",
+                  "/images/image001.webp",
+                  "/images/image035.webp",
+                  "/images/image051.webp",
                   "/images/image00005.jpeg",
                 ].map((img, i) => (
                   <Link
@@ -610,7 +610,7 @@ export default function Home() {
                     <div className="relative group w-full max-w-md">
                       <div className="relative aspect-[3/4] overflow-hidden shadow-2xl">
                         <Image
-                          src="/images/profile/image00012.jpeg"
+                          src="/images/profile/image00012.webp"
                           alt="Papa Yaw Ataamle"
                           fill
                           className="object-cover object-top"
