@@ -26,8 +26,26 @@ export default function About() {
     { number: "5+", label: "Partners" },
   ];
 
+  // Achievement types
+  type AchievementWithItems = {
+    id: string;
+    title: string;
+    items: string[];
+  };
+
+  type AchievementWithSections = {
+    id: string;
+    title: string;
+    sections: Array<{
+      subtitle: string;
+      items: string[];
+    }>;
+  };
+
+  type Achievement = AchievementWithItems | AchievementWithSections;
+
   // Base achievements data
-  const television = {
+  const television: AchievementWithItems = {
     id: "television",
     title: "Television",
     items: [
@@ -37,7 +55,7 @@ export default function About() {
     ],
   };
 
-  const venues = {
+  const venues: AchievementWithItems = {
     id: "venues",
     title: "Venues",
     items: [
@@ -52,7 +70,7 @@ export default function About() {
     ],
   };
 
-  const digitalBrands = {
+  const digitalBrands: AchievementWithSections = {
     id: "digital-brands",
     title: "Digital & Brands",
     sections: [
@@ -68,8 +86,8 @@ export default function About() {
   };
 
   // Different ordering for mobile vs desktop
-  const achievementsMobile = [television, digitalBrands, venues];
-  const achievementsDesktop = [television, venues, digitalBrands];
+  const achievementsMobile: Achievement[] = [television, digitalBrands, venues];
+  const achievementsDesktop: Achievement[] = [television, venues, digitalBrands];
 
   return (
     <div className="bg-white min-h-screen flex flex-col font-[family-name:var(--font-dm-sans)]">
@@ -237,7 +255,7 @@ export default function About() {
                   </h3>
 
                   {/* Handle regular items or sections with subtitles */}
-                  {section.items ? (
+                  {'items' in section ? (
                     <ul className="space-y-1">
                       {section.items.map((item, i) => (
                         <li
@@ -429,7 +447,7 @@ export default function About() {
                       </h3>
 
                       {/* Handle regular items or sections with subtitles */}
-                      {section.items ? (
+                      {'items' in section ? (
                         <ul
                           className={`space-y-2 ${section.id === "venues" ? "columns-2 gap-x-6" : ""}`}
                         >

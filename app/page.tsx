@@ -59,8 +59,42 @@ export default function Home() {
       <div className="bg-white min-h-screen flex flex-col font-[family-name:var(--font-dm-sans)]">
         <Navigation />
 
-        {/* ===== MOBILE LAYOUT ===== */}
-        {isMobile ? (
+        {/* Prevent flash of incorrect layout during hydration */}
+        {!mounted ? (
+          <main className="flex-1 flex flex-col animate-pulse">
+            {/* Hero Skeleton */}
+            <section className="relative bg-gray-200 pt-14">
+              <div className="h-[60vh] bg-gradient-to-b from-gray-300 to-gray-200" />
+              <div className="absolute bottom-0 left-0 right-0 p-5 space-y-3">
+                <div className="h-3 bg-gray-400/50 w-32 rounded" />
+                <div className="h-8 bg-gray-400/50 w-48 rounded" />
+                <div className="h-4 bg-gray-400/50 w-64 rounded" />
+              </div>
+            </section>
+
+            {/* Stats Skeleton */}
+            <section className="py-4 px-5 border-b border-gray-200">
+              <div className="flex justify-between">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="text-center space-y-2">
+                    <div className="h-6 bg-gray-300 w-12 rounded mx-auto" />
+                    <div className="h-3 bg-gray-200 w-16 rounded mx-auto" />
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Content Skeleton */}
+            <section className="px-5 py-8 space-y-4">
+              <div className="h-4 bg-gray-300 w-24 rounded" />
+              <div className="grid grid-cols-2 gap-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="aspect-[9/16] bg-gray-200 rounded-lg" />
+                ))}
+              </div>
+            </section>
+          </main>
+        ) : isMobile ? (
           <main className="pb-8 flex-1 flex flex-col">
             {/* Hero - Compact Mobile with Dark Overlay */}
             <section className="relative bg-[var(--color-charcoal)] pt-14">
