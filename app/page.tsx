@@ -1,15 +1,22 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
-import VideoModal from "./components/VideoModal";
 import ShortPreview from "./components/ShortPreview";
-import FlyerModal from "./components/FlyerModal";
 import { hasEvents, upcomingShows } from "./data/events";
 import { stats } from "./data/stats";
+
+// Lazy load modals since they're not needed on initial render
+const VideoModal = dynamic(() => import("./components/VideoModal"), {
+  ssr: false,
+});
+const FlyerModal = dynamic(() => import("./components/FlyerModal"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -168,6 +175,7 @@ export default function Home() {
                 </h2>
                 <Link
                   href="/videos"
+                  prefetch={true}
                   className="text-xs uppercase tracking-wider text-[var(--color-accent)]"
                 >
                   See All
@@ -197,6 +205,7 @@ export default function Home() {
                 {hasEvents && (
                   <Link
                     href="/shows"
+                    prefetch={true}
                     className="text-xs uppercase tracking-wider text-[var(--color-accent)]"
                   >
                     View All
@@ -364,6 +373,7 @@ export default function Home() {
                 </h2>
                 <Link
                   href="/gallery"
+                  prefetch={true}
                   className="text-xs uppercase tracking-wider text-[var(--color-accent)]"
                 >
                   See All
@@ -667,6 +677,7 @@ export default function Home() {
                     </div>
                     <Link
                       href="/videos"
+                      prefetch={true}
                       className="group flex items-center gap-2 text-[var(--color-charcoal)] hover:text-[var(--color-accent)] transition-colors"
                     >
                       <span className="text-sm uppercase tracking-widest">
@@ -718,6 +729,7 @@ export default function Home() {
                     {hasEvents && (
                       <Link
                         href="/shows"
+                        prefetch={true}
                         className="group flex items-center gap-2 text-[var(--color-charcoal)] hover:text-[var(--color-accent)] transition-colors"
                       >
                         <span className="text-sm uppercase tracking-widest">

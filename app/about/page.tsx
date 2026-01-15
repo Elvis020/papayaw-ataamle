@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import ScrollReveal from "../components/ScrollReveal";
@@ -92,11 +93,13 @@ export default function About() {
           {/* Header with Photo */}
           <section className="relative bg-[var(--color-charcoal)]">
             <div className="relative h-[55vh] overflow-hidden">
-              <img
+              <Image
                 src="/images/image00005.webp"
                 alt="Papa Yaw Ataamle"
-                className="w-full h-full object-cover object-[50%_0%] animate-fade-in"
-                loading="eager"
+                fill
+                className="object-cover object-[50%_0%] animate-fade-in"
+                priority
+                sizes="100vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-charcoal)] via-[var(--color-charcoal)]/40 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-5 pb-6">
@@ -317,10 +320,13 @@ export default function About() {
                   <ScrollReveal delay={0.2}>
                     <div className="relative lg:absolute lg:-top-20 lg:right-0 w-full lg:w-[400px]">
                       <div className="aspect-[3/4] bg-[var(--color-light-gray)] rounded-sm overflow-hidden relative">
-                        <img
+                        <Image
                           src="/images/image00005.webp"
                           alt="Papa Yaw Ataamle"
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
+                          priority
+                          sizes="(max-width: 1024px) 100vw, 400px"
                         />
                         {/* Decorative element */}
                         <div className="absolute -z-10 -bottom-4 -right-4 w-full h-full border-2 border-[var(--color-accent)] rounded-sm" />
