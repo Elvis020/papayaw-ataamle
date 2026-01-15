@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
@@ -9,6 +10,11 @@ import { upcomingShows, hasEvents } from "../data/events";
 
 export default function Shows() {
   const shows = upcomingShows;
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
+
+  const handleImageLoad = (index: number) => {
+    setLoadedImages((prev) => new Set(prev).add(index));
+  };
 
   return (
     <div className="bg-white min-h-screen flex flex-col font-[family-name:var(--font-dm-sans)]">
@@ -40,13 +46,19 @@ export default function Shows() {
                     <div className="flex flex-col md:flex-row gap-6">
                       {/* Flyer Image */}
                       {show.flyer && (
-                        <div className="md:w-64 h-64 md:h-auto relative bg-gray-100 shrink-0">
+                        <div className="md:w-64 h-64 md:h-auto relative bg-gray-100 shrink-0 overflow-hidden">
+                          {!loadedImages.has(index) && (
+                            <div className="absolute inset-0 shimmer z-10" />
+                          )}
                           <Image
                             src={show.flyer}
                             alt={`${show.venue} flyer`}
                             fill
-                            className="object-cover"
+                            className={`object-cover transition-opacity duration-500 ${
+                              loadedImages.has(index) ? "opacity-100" : "opacity-0"
+                            }`}
                             sizes="(max-width: 768px) 100vw, 256px"
+                            onLoad={() => handleImageLoad(index)}
                           />
                         </div>
                       )}

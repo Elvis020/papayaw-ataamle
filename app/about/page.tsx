@@ -12,6 +12,11 @@ export default function About() {
   const [isMobile, setIsMobile] = useState(true);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [bioExpanded, setBioExpanded] = useState(false);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+
+  const handleImageLoad = (id: string) => {
+    setLoadedImages((prev) => new Set(prev).add(id));
+  };
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -94,13 +99,19 @@ export default function About() {
           {/* Header with Photo */}
           <section className="relative bg-[var(--color-charcoal)]">
             <div className="relative h-[55vh] overflow-hidden">
+              {!loadedImages.has('about-mobile') && (
+                <div className="absolute inset-0 shimmer-dark z-10" />
+              )}
               <Image
                 src="/images/image00005.webp"
                 alt="Papa Yaw Ataamle"
                 fill
-                className="object-cover object-[50%_0%] animate-fade-in"
+                className={`object-cover object-[50%_0%] animate-fade-in transition-opacity duration-500 ${
+                  loadedImages.has('about-mobile') ? 'opacity-100' : 'opacity-0'
+                }`}
                 priority
                 sizes="100vw"
+                onLoad={() => handleImageLoad('about-mobile')}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-charcoal)] via-[var(--color-charcoal)]/40 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-5 pb-6">
@@ -321,13 +332,19 @@ export default function About() {
                   <ScrollReveal delay={0.2}>
                     <div className="relative lg:absolute lg:-top-20 lg:right-0 w-full lg:w-[400px]">
                       <div className="aspect-[3/4] bg-[var(--color-light-gray)] rounded-sm overflow-hidden relative">
+                        {!loadedImages.has('about-desktop') && (
+                          <div className="absolute inset-0 shimmer z-10" />
+                        )}
                         <Image
                           src="/images/image00005.webp"
                           alt="Papa Yaw Ataamle"
                           fill
-                          className="object-cover"
+                          className={`object-cover transition-opacity duration-500 ${
+                            loadedImages.has('about-desktop') ? 'opacity-100' : 'opacity-0'
+                          }`}
                           priority
                           sizes="(max-width: 1024px) 100vw, 400px"
+                          onLoad={() => handleImageLoad('about-desktop')}
                         />
                         {/* Decorative element */}
                         <div className="absolute -z-10 -bottom-4 -right-4 w-full h-full border-2 border-[var(--color-accent)] rounded-sm" />

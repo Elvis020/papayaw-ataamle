@@ -12,6 +12,11 @@ export default function Videos() {
   const [video1Playing, setVideo1Playing] = useState(false);
   const [video2Playing, setVideo2Playing] = useState(false);
   const [video3Playing, setVideo3Playing] = useState(false);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+
+  const handleImageLoad = (id: string) => {
+    setLoadedImages((prev) => new Set(prev).add(id));
+  };
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -75,10 +80,16 @@ export default function Videos() {
                   onClick={() => openVideoModal(i)}
                 >
                   <div className="relative w-28 aspect-[9/16] rounded-sm overflow-hidden bg-[var(--color-charcoal)]">
+                    {!loadedImages.has(`short-mobile-${short.youtubeId}`) && (
+                      <div className="absolute inset-0 shimmer-dark z-10" />
+                    )}
                     <img
                       src={`https://img.youtube.com/vi/${short.youtubeId}/hqdefault.jpg`}
                       alt="YouTube Short"
-                      className="w-full h-full object-cover"
+                      className={`w-full h-full object-cover transition-opacity duration-300 ${
+                        loadedImages.has(`short-mobile-${short.youtubeId}`) ? 'opacity-100' : 'opacity-0'
+                      }`}
+                      onLoad={() => handleImageLoad(`short-mobile-${short.youtubeId}`)}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                     {/* Play icon */}
@@ -141,10 +152,16 @@ export default function Videos() {
                         className="relative w-full h-full cursor-pointer group"
                         onClick={() => video.setPlaying(true)}
                       >
+                        {!loadedImages.has(`featured-mobile-${video.id}`) && (
+                          <div className="absolute inset-0 shimmer-dark z-10" />
+                        )}
                         <img
                           src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
                           alt="Comedy Special Thumbnail"
-                          className="w-full h-full object-cover"
+                          className={`w-full h-full object-cover transition-opacity duration-300 ${
+                            loadedImages.has(`featured-mobile-${video.id}`) ? 'opacity-100' : 'opacity-0'
+                          }`}
+                          onLoad={() => handleImageLoad(`featured-mobile-${video.id}`)}
                         />
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
                         <div className="absolute inset-0 flex items-center justify-center">
@@ -217,10 +234,16 @@ export default function Videos() {
                     onClick={() => openVideoModal(i)}
                   >
                     <div className="relative aspect-[9/16] rounded-xl overflow-hidden bg-[var(--color-charcoal)] shadow-lg group-hover:shadow-xl transition-shadow">
+                      {!loadedImages.has(`short-desktop-${short.youtubeId}`) && (
+                        <div className="absolute inset-0 shimmer-dark z-10" />
+                      )}
                       <img
                         src={`https://img.youtube.com/vi/${short.youtubeId}/hqdefault.jpg`}
                         alt="YouTube Short"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-300 ${
+                          loadedImages.has(`short-desktop-${short.youtubeId}`) ? 'opacity-100' : 'opacity-0'
+                        }`}
+                        onLoad={() => handleImageLoad(`short-desktop-${short.youtubeId}`)}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                       {/* Play icon */}
@@ -285,10 +308,16 @@ export default function Videos() {
                           className="relative w-full h-full cursor-pointer group"
                           onClick={() => video.setPlaying(true)}
                         >
+                          {!loadedImages.has(`featured-desktop-${video.id}`) && (
+                            <div className="absolute inset-0 shimmer-dark z-10" />
+                          )}
                           <img
                             src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
                             alt="Comedy Special Thumbnail"
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ${
+                              loadedImages.has(`featured-desktop-${video.id}`) ? 'opacity-100' : 'opacity-0'
+                            }`}
+                            onLoad={() => handleImageLoad(`featured-desktop-${video.id}`)}
                           />
                           <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
                           <div className="absolute inset-0 flex items-center justify-center">

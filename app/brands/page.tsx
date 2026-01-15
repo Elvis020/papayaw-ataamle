@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import ScrollReveal from "../components/ScrollReveal";
@@ -7,6 +8,12 @@ import ScrollToTop from "../components/ScrollToTop";
 import Link from "next/link";
 
 export default function Brands() {
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
+
+  const handleImageLoad = (index: number) => {
+    setLoadedImages((prev) => new Set(prev).add(index));
+  };
+
   const partnerships = [
     {
       name: "KS Electricals",
@@ -63,12 +70,18 @@ export default function Brands() {
             {partnerships.map((partnership, index) => {
               const CardContent = (
                 <>
-                  <div className="h-64 rounded-sm mb-6 overflow-hidden">
+                  <div className="h-64 rounded-sm mb-6 overflow-hidden relative bg-gray-100">
+                    {!loadedImages.has(index) && (
+                      <div className="absolute inset-0 shimmer z-10" />
+                    )}
                     <img
                       src={partnership.image}
                       alt={partnership.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-300 ${
+                        loadedImages.has(index) ? 'opacity-100' : 'opacity-0'
+                      }`}
                       style={{ objectPosition: partnership.imagePosition }}
+                      onLoad={() => handleImageLoad(index)}
                     />
                   </div>
                   <h3 className="text-xl font-[family-name:var(--font-fraunces)] font-semibold text-[var(--color-charcoal)] mb-1 group-hover:text-[var(--color-accent)] transition-colors">

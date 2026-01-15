@@ -26,6 +26,11 @@ export default function Home() {
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
   const [flyerModalOpen, setFlyerModalOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+
+  const handleImageLoad = (id: string) => {
+    setLoadedImages((prev) => new Set(prev).add(id));
+  };
 
   const openVideoModal = (index: number) => {
     setSelectedVideoIndex(index);
@@ -113,13 +118,19 @@ export default function Home() {
             <section className="relative bg-[var(--color-charcoal)] pt-14">
               {/* Hero Image with Dark Overlay */}
               <div className="relative h-[60vh] overflow-hidden">
+                {!loadedImages.has('hero-mobile') && (
+                  <div className="absolute inset-0 shimmer-dark z-10" />
+                )}
                 <Image
                   src="/images/profile/image00012.webp"
                   alt="Papa Yaw Ataamle"
                   fill
-                  className="object-cover object-[center_30%] animate-fade-in"
+                  className={`object-cover object-[center_30%] animate-fade-in transition-opacity duration-500 ${
+                    loadedImages.has('hero-mobile') ? 'opacity-100' : 'opacity-0'
+                  }`}
                   priority
                   sizes="100vw"
+                  onLoad={() => handleImageLoad('hero-mobile')}
                 />
                 {/* Dark gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-charcoal)] via-[var(--color-charcoal)]/80 to-black/30" />
@@ -219,13 +230,19 @@ export default function Home() {
                   className="w-full text-left bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-[var(--color-accent)] transition-colors"
                 >
                   {upcomingShows[0].flyer && (
-                    <div className="relative h-48 bg-gray-100">
+                    <div className="relative h-48 bg-gray-100 overflow-hidden">
+                      {!loadedImages.has('flyer-mobile') && (
+                        <div className="absolute inset-0 shimmer z-10" />
+                      )}
                       <Image
                         src={upcomingShows[0].flyer}
                         alt={`${upcomingShows[0].venue} flyer`}
                         fill
-                        className="object-cover"
+                        className={`object-cover transition-opacity duration-500 ${
+                          loadedImages.has('flyer-mobile') ? 'opacity-100' : 'opacity-0'
+                        }`}
                         sizes="(max-width: 768px) 100vw, 400px"
+                        onLoad={() => handleImageLoad('flyer-mobile')}
                       />
                     </div>
                   )}
@@ -385,20 +402,26 @@ export default function Home() {
                   "/images/image001.webp",
                   "/images/image035.webp",
                   "/images/image051.webp",
-                  "/images/image00005.jpeg",
+                  "/images/image00005.webp",
                 ].map((img, i) => (
                   <Link
                     key={i}
                     href="/gallery"
                     className="flex-shrink-0 snap-start"
                   >
-                    <div className="w-28 h-36 rounded-sm overflow-hidden relative">
+                    <div className="w-28 h-36 rounded-sm overflow-hidden relative bg-gray-100">
+                      {!loadedImages.has(`gallery-mobile-${i}`) && (
+                        <div className="absolute inset-0 shimmer z-10" />
+                      )}
                       <Image
                         src={img}
                         alt="Gallery"
                         fill
-                        className="object-cover"
+                        className={`object-cover transition-opacity duration-300 ${
+                          loadedImages.has(`gallery-mobile-${i}`) ? 'opacity-100' : 'opacity-0'
+                        }`}
                         sizes="112px"
+                        onLoad={() => handleImageLoad(`gallery-mobile-${i}`)}
                       />
                     </div>
                   </Link>
@@ -618,14 +641,20 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--color-charcoal)]/60 z-10 pointer-events-none" />
                   <div className="absolute inset-0 flex items-center justify-center p-12">
                     <div className="relative group w-full max-w-md">
-                      <div className="relative aspect-[3/4] overflow-hidden shadow-2xl">
+                      <div className="relative aspect-[3/4] overflow-hidden shadow-2xl bg-gray-800">
+                        {!loadedImages.has('hero-desktop') && (
+                          <div className="absolute inset-0 shimmer-dark z-10" />
+                        )}
                         <Image
                           src="/images/profile/image00012.webp"
                           alt="Papa Yaw Ataamle"
                           fill
-                          className="object-cover object-top"
+                          className={`object-cover object-top transition-opacity duration-500 ${
+                            loadedImages.has('hero-desktop') ? 'opacity-100' : 'opacity-0'
+                          }`}
                           priority
                           sizes="(max-width: 768px) 100vw, 400px"
+                          onLoad={() => handleImageLoad('hero-desktop')}
                         />
                       </div>
                       <div className="absolute -top-4 -right-4 w-full h-full border-2 border-[var(--color-accent)] -z-10" />
@@ -760,13 +789,19 @@ export default function Home() {
                       <div className="grid md:grid-cols-2 gap-8">
                         {/* Flyer */}
                         {upcomingShows[0].flyer && (
-                          <div className="relative h-96 bg-gray-100">
+                          <div className="relative h-96 bg-gray-100 overflow-hidden">
+                            {!loadedImages.has('flyer-desktop') && (
+                              <div className="absolute inset-0 shimmer z-10" />
+                            )}
                             <Image
                               src={upcomingShows[0].flyer}
                               alt={`${upcomingShows[0].venue} flyer`}
                               fill
-                              className="object-cover"
+                              className={`object-cover transition-opacity duration-500 ${
+                                loadedImages.has('flyer-desktop') ? 'opacity-100' : 'opacity-0'
+                              }`}
                               sizes="(max-width: 768px) 100vw, 50vw"
+                              onLoad={() => handleImageLoad('flyer-desktop')}
                             />
                           </div>
                         )}

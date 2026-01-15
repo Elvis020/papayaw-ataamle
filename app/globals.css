@@ -93,3 +93,25 @@ body {
   );
   background-size: 1000px 100%;
 }
+
+/* Top loading bar - Fake progress bar */
+.loading-bar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 99999;
+  background: rgba(199, 82, 42, 0.05);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), #e66b3d);
+  box-shadow: 0 0 10px rgba(199, 82, 42, 0.5);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width;
+  transform: translateZ(0);
+}

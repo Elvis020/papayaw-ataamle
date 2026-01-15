@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, DM_Sans } from "next/font/google";
 import "./globals.css";
+import LayoutWrapper from "./components/LayoutWrapper";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -134,7 +135,7 @@ export default function RootLayout({
       <body
         className={`${fraunces.variable} ${dmSans.variable} antialiased`}
       >
-        {children}
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );
