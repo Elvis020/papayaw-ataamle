@@ -54,12 +54,16 @@ export default function Shows() {
                       {/* Event Details */}
                       <div className="flex-1 p-6 md:py-8">
                         <div className="flex flex-col h-full">
-                          {/* Recurring Badge */}
-                          {show.recurring && (
-                            <div className="mb-3">
-                              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[var(--color-accent)]/10 text-[var(--color-accent)] text-xs font-semibold uppercase tracking-wider rounded-full">
+                          <h3 className="text-2xl md:text-3xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-4">
+                            {show.venue}
+                          </h3>
+
+                          {/* Schedule Info */}
+                          <div className="space-y-2 mb-6">
+                            {show.location && (
+                              <div className="flex items-center gap-2 text-[var(--color-gray)]">
                                 <svg
-                                  className="w-3.5 h-3.5"
+                                  className="w-5 h-5 text-[var(--color-accent)]"
                                   fill="none"
                                   viewBox="0 0 24 24"
                                   stroke="currentColor"
@@ -68,23 +72,18 @@ export default function Shows() {
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
                                     strokeWidth={2}
-                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                                   />
                                 </svg>
-                                Recurring Event
-                              </span>
-                            </div>
-                          )}
-
-                          <h3 className="text-2xl md:text-3xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-2">
-                            {show.venue}
-                          </h3>
-                          <p className="text-lg text-[var(--color-gray)] mb-4">
-                            {show.city}
-                          </p>
-
-                          {/* Schedule Info */}
-                          <div className="space-y-2 mb-6">
+                                <span>{show.location}</span>
+                              </div>
+                            )}
                             {show.recurring ? (
                               <>
                                 <div className="flex items-center gap-2 text-[var(--color-charcoal)]">
@@ -144,29 +143,24 @@ export default function Shows() {
                                 </span>
                               </div>
                             )}
-                          </div>
-
-                          {/* CTA Button */}
-                          <div className="mt-auto">
-                            <a
-                              href={show.ticketLink || "#"}
-                              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-accent)] text-white font-medium uppercase tracking-wider text-sm hover:bg-[#a33d1e] transition-colors"
-                            >
-                              {show.recurring ? "More Info" : "Get Tickets"}
-                              <svg
-                                className="w-4 h-4"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M9 5l7 7-7 7"
-                                />
-                              </svg>
-                            </a>
+                            {show.rate && (
+                              <div className="flex items-center gap-2 text-[var(--color-accent)] font-semibold">
+                                <svg
+                                  className="w-5 h-5"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
+                                  />
+                                </svg>
+                                <span>{show.rate}</span>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>

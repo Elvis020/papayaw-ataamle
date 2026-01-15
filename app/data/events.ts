@@ -9,9 +9,11 @@ export interface Show {
   year?: string; // Optional for recurring events
   venue: string;
   city: string;
+  location?: string; // Full address
+  rate?: string; // Ticket price
   recurring?: {
-    schedule: string; // e.g., "Every Friday", "Weekly", "Monthly"
-    time?: string; // e.g., "8:00 PM"
+    schedule: string; // e.g., "Every Thursday", "Weekly", "Monthly"
+    time?: string; // e.g., "7:30 PM"
   };
   flyer?: string; // Path to flyer image (relative to /public)
   ticketLink?: string; // Optional ticket URL
@@ -22,9 +24,11 @@ export const upcomingShows: Show[] = [
   {
     venue: "2927 Comedy Club",
     city: "Accra",
+    location: "2927 Temera Street",
+    rate: "GHS 50",
     recurring: {
       schedule: "Every Thursday",
-      time: "8:00 PM",
+      time: "7:30 PM",
     },
     flyer: "/images/shows/ComedyClub.jpeg",
     ticketLink: "#", // Replace with actual ticket link

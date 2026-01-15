@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import VideoModal from "./components/VideoModal";
 import ShortPreview from "./components/ShortPreview";
+import FlyerModal from "./components/FlyerModal";
 import { hasEvents, upcomingShows } from "./data/events";
 import { stats } from "./data/stats";
 
@@ -16,6 +17,7 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
+  const [flyerModalOpen, setFlyerModalOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
 
   const openVideoModal = (index: number) => {
@@ -203,9 +205,9 @@ export default function Home() {
               </div>
 
               {hasEvents ? (
-                <Link
-                  href="/shows"
-                  className="block bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-[var(--color-accent)] transition-colors"
+                <button
+                  onClick={() => setFlyerModalOpen(true)}
+                  className="w-full text-left bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-[var(--color-accent)] transition-colors"
                 >
                   {upcomingShows[0].flyer && (
                     <div className="relative h-48 bg-gray-100">
@@ -216,11 +218,42 @@ export default function Home() {
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, 400px"
                       />
-                      {upcomingShows[0].recurring && (
-                        <div className="absolute top-3 right-3">
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[var(--color-accent)] text-white text-xs font-semibold uppercase tracking-wider rounded-full shadow-lg">
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <h3 className="text-lg font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-1">
+                      {upcomingShows[0].venue}
+                    </h3>
+                    <div className="space-y-1.5">
+                      {upcomingShows[0].location && (
+                        <div className="flex items-center gap-2 text-sm text-[var(--color-gray)]">
+                          <svg
+                            className="w-4 h-4 text-[var(--color-accent)]"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                            />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                          </svg>
+                          <span>{upcomingShows[0].location}</span>
+                        </div>
+                      )}
+                      {upcomingShows[0].recurring ? (
+                        <>
+                          <div className="flex items-center gap-2 text-sm text-[var(--color-charcoal)]">
                             <svg
-                              className="w-3 h-3"
+                              className="w-4 h-4 text-[var(--color-accent)]"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -229,24 +262,33 @@ export default function Home() {
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 strokeWidth={2}
-                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                               />
                             </svg>
-                            Recurring
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  <div className="p-4">
-                    <h3 className="text-lg font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-1">
-                      {upcomingShows[0].venue}
-                    </h3>
-                    <p className="text-sm text-[var(--color-gray)] mb-3">
-                      {upcomingShows[0].city}
-                    </p>
-                    {upcomingShows[0].recurring ? (
-                      <div className="space-y-1.5">
+                            <span className="font-medium">
+                              {upcomingShows[0].recurring.schedule}
+                            </span>
+                          </div>
+                          {upcomingShows[0].recurring.time && (
+                            <div className="flex items-center gap-2 text-sm text-[var(--color-gray)]">
+                              <svg
+                                className="w-4 h-4 text-[var(--color-accent)]"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
+                              <span>{upcomingShows[0].recurring.time}</span>
+                            </div>
+                          )}
+                        </>
+                      ) : (
                         <div className="flex items-center gap-2 text-sm text-[var(--color-charcoal)]">
                           <svg
                             className="w-4 h-4 text-[var(--color-accent)]"
@@ -262,35 +304,31 @@ export default function Home() {
                             />
                           </svg>
                           <span className="font-medium">
-                            {upcomingShows[0].recurring.schedule}
+                            {upcomingShows[0].date} {upcomingShows[0].year}
                           </span>
                         </div>
-                        {upcomingShows[0].recurring.time && (
-                          <div className="flex items-center gap-2 text-sm text-[var(--color-gray)]">
-                            <svg
-                              className="w-4 h-4 text-[var(--color-accent)]"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                              />
-                            </svg>
-                            <span>{upcomingShows[0].recurring.time}</span>
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      <p className="text-sm text-[var(--color-charcoal)] font-medium">
-                        {upcomingShows[0].date} {upcomingShows[0].year}
-                      </p>
-                    )}
+                      )}
+                      {upcomingShows[0].rate && (
+                        <div className="flex items-center gap-2 text-sm text-[var(--color-accent)] font-semibold">
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
+                            />
+                          </svg>
+                          <span>{upcomingShows[0].rate}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </Link>
+                </button>
               ) : (
                 <div className="bg-[var(--color-light-gray)] rounded-xl p-6 text-center">
                   <div className="w-12 h-12 rounded-full bg-[var(--color-charcoal)]/10 flex items-center justify-center mx-auto mb-3">
@@ -703,9 +741,9 @@ export default function Home() {
                   </div>
 
                   {hasEvents ? (
-                    <Link
-                      href="/shows"
-                      className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-[var(--color-accent)] transition-colors"
+                    <button
+                      onClick={() => setFlyerModalOpen(true)}
+                      className="w-full text-left bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-[var(--color-accent)] transition-colors"
                     >
                       <div className="grid md:grid-cols-2 gap-8">
                         {/* Flyer */}
@@ -718,26 +756,6 @@ export default function Home() {
                               className="object-cover"
                               sizes="(max-width: 768px) 100vw, 50vw"
                             />
-                            {upcomingShows[0].recurring && (
-                              <div className="absolute top-4 right-4">
-                                <span className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-accent)] text-white text-sm font-semibold uppercase tracking-wider rounded-full shadow-lg">
-                                  <svg
-                                    className="w-4 h-4"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                                    />
-                                  </svg>
-                                  Recurring Event
-                                </span>
-                              </div>
-                            )}
                           </div>
                         )}
 
@@ -746,12 +764,72 @@ export default function Home() {
                           <h3 className="text-3xl font-[family-name:var(--font-fraunces)] font-bold text-[var(--color-charcoal)] mb-3">
                             {upcomingShows[0].venue}
                           </h3>
-                          <p className="text-xl text-[var(--color-gray)] mb-6">
-                            {upcomingShows[0].city}
-                          </p>
 
-                          {upcomingShows[0].recurring ? (
-                            <div className="space-y-3 mb-8">
+                          <div className="space-y-3 mb-8">
+                            {upcomingShows[0].location && (
+                              <div className="flex items-center gap-3 text-lg text-[var(--color-gray)]">
+                                <svg
+                                  className="w-6 h-6 text-[var(--color-accent)]"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                  />
+                                </svg>
+                                <span>{upcomingShows[0].location}</span>
+                              </div>
+                            )}
+                            {upcomingShows[0].recurring ? (
+                              <>
+                                <div className="flex items-center gap-3 text-lg text-[var(--color-charcoal)]">
+                                  <svg
+                                    className="w-6 h-6 text-[var(--color-accent)]"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                    />
+                                  </svg>
+                                  <span className="font-semibold">
+                                    {upcomingShows[0].recurring.schedule}
+                                  </span>
+                                </div>
+                                {upcomingShows[0].recurring.time && (
+                                  <div className="flex items-center gap-3 text-lg text-[var(--color-gray)]">
+                                    <svg
+                                      className="w-6 h-6 text-[var(--color-accent)]"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                    <span>{upcomingShows[0].recurring.time}</span>
+                                  </div>
+                                )}
+                              </>
+                            ) : (
                               <div className="flex items-center gap-3 text-lg text-[var(--color-charcoal)]">
                                 <svg
                                   className="w-6 h-6 text-[var(--color-accent)]"
@@ -767,57 +845,32 @@ export default function Home() {
                                   />
                                 </svg>
                                 <span className="font-semibold">
-                                  {upcomingShows[0].recurring.schedule}
+                                  {upcomingShows[0].date} {upcomingShows[0].year}
                                 </span>
                               </div>
-                              {upcomingShows[0].recurring.time && (
-                                <div className="flex items-center gap-3 text-lg text-[var(--color-gray)]">
-                                  <svg
-                                    className="w-6 h-6 text-[var(--color-accent)]"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                  </svg>
-                                  <span>{upcomingShows[0].recurring.time}</span>
-                                </div>
-                              )}
-                            </div>
-                          ) : (
-                            <p className="text-lg text-[var(--color-charcoal)] font-semibold mb-8">
-                              {upcomingShows[0].date} {upcomingShows[0].year}
-                            </p>
-                          )}
-
-                          <div className="inline-flex items-center gap-2 text-[var(--color-accent)] font-medium">
-                            <span>
-                              {upcomingShows[0].recurring
-                                ? "Learn More"
-                                : "Get Tickets"}
-                            </span>
-                            <svg
-                              className="w-5 h-5"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                              />
-                            </svg>
+                            )}
+                            {upcomingShows[0].rate && (
+                              <div className="flex items-center gap-3 text-lg text-[var(--color-accent)] font-semibold">
+                                <svg
+                                  className="w-6 h-6"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
+                                  />
+                                </svg>
+                                <span>{upcomingShows[0].rate}</span>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
-                    </Link>
+                    </button>
                   ) : (
                     <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
                       <div className="w-16 h-16 rounded-full bg-[var(--color-charcoal)]/10 flex items-center justify-center mx-auto mb-4">
@@ -1087,6 +1140,16 @@ export default function Home() {
           }
         }
       `}</style>
+
+      {/* Flyer Modal */}
+      {hasEvents && upcomingShows[0].flyer && (
+        <FlyerModal
+          isOpen={flyerModalOpen}
+          onClose={() => setFlyerModalOpen(false)}
+          flyerSrc={upcomingShows[0].flyer}
+          venueName={upcomingShows[0].venue}
+        />
+      )}
 
       {/* Video Modal */}
       <VideoModal
