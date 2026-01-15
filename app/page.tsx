@@ -27,9 +27,14 @@ export default function Home() {
   const [flyerModalOpen, setFlyerModalOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+  const [carouselPaused, setCarouselPaused] = useState(false);
 
   const handleImageLoad = (id: string) => {
     setLoadedImages((prev) => new Set(prev).add(id));
+  };
+
+  const toggleCarousel = () => {
+    setCarouselPaused((prev) => !prev);
   };
 
   const openVideoModal = (index: number) => {
@@ -434,8 +439,13 @@ export default function Home() {
               <p className="text-[10px] uppercase tracking-widest text-[var(--color-gray)] text-center mb-4">
                 Brand Partners
               </p>
-              <div className="marquee-mobile">
-                <div className="marquee-content-mobile">
+              <div
+                className="marquee-mobile cursor-pointer"
+                onClick={toggleCarousel}
+                role="button"
+                aria-label={carouselPaused ? "Resume carousel" : "Pause carousel"}
+              >
+                <div className={`marquee-content-mobile ${carouselPaused ? 'paused' : ''}`}>
                   {[
                     "KS Electricals",
                     "Kantanka KHPRC",
@@ -450,7 +460,7 @@ export default function Home() {
                     </span>
                   ))}
                 </div>
-                <div className="marquee-content-mobile" aria-hidden="true">
+                <div className={`marquee-content-mobile ${carouselPaused ? 'paused' : ''}`} aria-hidden="true">
                   {[
                     "KS Electricals",
                     "Kantanka KHPRC",
@@ -953,8 +963,13 @@ export default function Home() {
                     Trusted By
                   </p>
                 </div>
-                <div className="marquee-desktop">
-                  <div className="marquee-content-desktop">
+                <div
+                  className="marquee-desktop cursor-pointer"
+                  onClick={toggleCarousel}
+                  role="button"
+                  aria-label={carouselPaused ? "Resume carousel" : "Pause carousel"}
+                >
+                  <div className={`marquee-content-desktop ${carouselPaused ? 'paused' : ''}`}>
                     {[
                       "KS Electricals",
                       "Kantanka KHPRC",
@@ -969,7 +984,7 @@ export default function Home() {
                       </span>
                     ))}
                   </div>
-                  <div className="marquee-content-desktop" aria-hidden="true">
+                  <div className={`marquee-content-desktop ${carouselPaused ? 'paused' : ''}`} aria-hidden="true">
                     {[
                       "KS Electricals",
                       "Kantanka KHPRC",
@@ -1141,9 +1156,9 @@ export default function Home() {
           animation: marquee 30s linear infinite;
         }
 
-        /* Pause on hover */
-        .marquee-mobile:hover .marquee-content-mobile,
-        .marquee-desktop:hover .marquee-content-desktop {
+        /* Pause on click */
+        .marquee-content-mobile.paused,
+        .marquee-content-desktop.paused {
           animation-play-state: paused;
         }
 
